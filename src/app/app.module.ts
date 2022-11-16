@@ -12,11 +12,13 @@ import { AuthEffects } from './state/auth/auth.effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './helper/jwtInterceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BattleComponent } from './components/battle/battle.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BattleComponent
   ],
   imports: [
     BrowserModule,
