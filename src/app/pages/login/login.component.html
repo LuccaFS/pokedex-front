@@ -1,0 +1,20 @@
+<div class="login">
+  <h1>Login</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div>
+      <label for="Email">Trainer E-mail:</label>
+      <input id="Email" type="text" formControlName="email" autocomplete="off">
+    </div>
+    <br>
+    <div>
+      <label>Password:</label>
+      <input id="Password" type="password" formControlName="password">
+    </div><br><br>
+    <button class="button" type="submit" [disabled]="!loginForm.valid">Login</button>
+  </form>
+
+  <br>
+  <p>New here? <a routerLink="/registry">sign up</a>.</p>
+</div>
+
+

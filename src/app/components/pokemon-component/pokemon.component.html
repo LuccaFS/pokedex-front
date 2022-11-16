@@ -1,0 +1,26 @@
+<div class="p-20">
+  <div class="grid gap-2 grid-cols-3 place-items-center" *ngIf="filterOpt">
+    <button class="button" (click)="filterStarter()">Starters</button>
+    <button class="button" (click)="filterPseudo()">Pseudo</button>
+    <button class="button" (click)="filterLegend()">Legendary/Mythical</button>
+    <br>
+  </div>
+  <div class="grid gap-2 grid-cols-3 md:items-center text-center justify-center">
+    <ng-container *ngFor="let Pokemon of PokemonList">
+      <div class="box-border md:box-content w-100">
+        <div class="header">
+          <h2 class="number">#{{ Pokemon.idPokemon }}</h2>
+          <h2 class="gen">Gen:{{ Pokemon.generation }}</h2>
+          <br>
+          <img class="container max-w-screen-lg mx-auto pb-10 flex justify-center" [src]="Pokemon.image" [alt]="Pokemon.dsName" /><br />
+        </div>
+        - <b>{{ Pokemon.dsName }}</b> - <br />
+        <div class="grid grid-cols-2 place-items-center ">
+          <span class="Type {{ Pokemon.type1 }}">{{ Pokemon.type1 }}</span>
+          <span class="Type {{ Pokemon.type2 }}">{{ Pokemon.type2 }}</span>
+          <br><br>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

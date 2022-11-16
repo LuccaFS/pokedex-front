@@ -1,0 +1,27 @@
+<div class="register">
+  <h1>New Account</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="createUser()">
+    <div>
+      <label>Name:</label>
+      <input id="Name" type="text" formControlName="name" autocomplete="off">
+    </div>
+    <br>
+    <div>
+      <label>Email:</label>
+      <input id="Email" type="text" formControlName="email" autocomplete="never">
+    </div>
+    <br>
+    <div>
+      <label>Password:</label>
+      <input id="Password" type="password" formControlName="password">
+      <span *ngIf="!registerForm.controls['password'].valid && registerForm.controls['password'].value !=''">Password must contain at least 8 characters.</span>
+    </div>
+    <br>
+    <div>
+      <label>Confirm Password:</label>
+      <input id="Confirm" type="password" formControlName="passwordConfirm">
+    </div>
+    <br><br>
+    <button class="button" type="submit" [disabled]="!registerForm.valid">Create Account</button>
+  </form>
+</div>
