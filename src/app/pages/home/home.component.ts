@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../state/auth/auth.actions';
 import * as fromAuth from '../../state/auth/auth.reducer';
@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private store: Store,
     private _store: Store<fromAuth.State>,
-    private route: Router,
+    private route: ActivatedRoute,
+    private router: Router
     //private _sanitazer: DomSanitazer
   ){ }
 
@@ -29,6 +30,14 @@ export class HomeComponent implements OnInit {
     //get auth user name from state
     this._store.select(fromAuth.selectUser).subscribe((user:any) => this.userName = user);
 
+  }
+
+  pokedex(){
+    this.router.navigate(['pokedex'], {relativeTo:this.route});
+  }
+
+  battle(){
+    this.router.navigate(['battle'], {relativeTo:this.route});
   }
 
 
