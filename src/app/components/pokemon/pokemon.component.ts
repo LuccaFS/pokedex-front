@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../../interfaces/pokemon.model';
 import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
+
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../state/auth/auth.actions';
 import * as fromAuth from '../../state/auth/auth.reducer';
+import * as PokeActions from '../../state/pokedex/pokedex.actions';
+import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
 
 @Component({
   selector: 'app-pokemon',
@@ -11,8 +14,7 @@ import * as fromAuth from '../../state/auth/auth.reducer';
   styleUrls: ['./pokemon.component.css']
 })
 export class PokemonComponent implements OnInit {
-
-
+  title = 'home';
 
   public Pokemons: Pokemon[]  = [];
 
@@ -25,18 +27,28 @@ export class PokemonComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private _store: Store<fromAuth.State>,
+    private _storeA: Store<fromAuth.State>,
+    private _storeP: Store<fromPokedex.State>,
     private pokemon: PokemonService
   ) { }
 
   async ngOnInit() {
 
-    this.store.dispatch(AuthActions.getUserRole());
+    this._storeP.select(fromPokedex.selectPokedexState).subscribe((state:any) =>{
+      if(!state.hasLoaded){
+        this.store.dispatch(AuthActions.getUserRole());
+        this.store.dispatch(PokeActions.pokemonGetAll({pokemon: this.Pokemons}));
+        this.PokemonList = this.Pokemons
+      }else{
+        this._storeP.select(fromPokedex.selectPokemonList).subscribe((pokeList: any) => this.PokemonList = this.Pokemons = pokeList)
+      }
+    })
 
-    await this.pokemon.getPokemonData('', this.Pokemons)
-    this.PokemonList = this.Pokemons;
+    //await this.pokemon.getPokemons(this.PokemonList)
 
-    this._store.select(fromAuth.selectRank).subscribe((user:any) => {
+
+
+    this._storeA.select(fromAuth.selectRank).subscribe((user:any) => {
       if(user == 'Pokeball'){
         this.filterStarter();
       }
@@ -102,8 +114,7 @@ export class PokemonComponent implements OnInit {
   }
 
   public filter(){
-    this.PokemonList = this.Pokemons.filter((s => s.isPseudo && s.isLegendary))
-    this.filterL+=1;
+    this.PokemonList = this.Pokemons.filter((s => !s.isPseudo && !s.isLegendary))
   }
 
 }

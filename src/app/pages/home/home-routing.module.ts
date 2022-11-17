@@ -1,9 +1,14 @@
+import { ShinyComponent } from './../../components/shiny/shiny.component';
 import { BattleComponent } from './../../components/battle/battle.component';
-import { PokemonComponent } from 'src/app/components/pokemon-component/pokemon.component';
+import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
+const routes: Routes = [{
+    path:'',
+    pathMatch: 'full',
+    redirectTo: 'pokedex'
+  },
   {
     path: 'pokedex',
     component: PokemonComponent
@@ -11,6 +16,10 @@ const routes: Routes = [
   {
     path:'battle',
     component: BattleComponent
+  },
+  {
+    path:'shiny',
+    component: ShinyComponent
   }
 ];
 

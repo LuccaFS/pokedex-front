@@ -10,7 +10,7 @@ import * as fromAuth from '../../state/auth/auth.reducer';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  title = 'home';
+  title = 'Pokedex';
 
 
   public userName = '';
@@ -38,6 +38,10 @@ export class HomeComponent implements OnInit {
 
   battle(){
     this.router.navigate(['battle'], {relativeTo:this.route});
+  }
+
+  shiny(){
+    this.router.navigate(['shiny'], {relativeTo:this.route});
   }
 
 

@@ -1,3 +1,5 @@
+import { ShinyComponent } from './../../components/shiny/shiny.component';
+import { BattleComponent } from './../../components/battle/battle.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,12 +8,14 @@ import { HomeComponent } from './home.component';
 
 import { HttpClientModule} from '@angular/common/http'
 
-import { PokemonComponent } from 'src/app/components/pokemon-component/pokemon.component';
+import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    PokemonComponent
+    PokemonComponent,
+    BattleComponent,
+    ShinyComponent
   ],
   imports: [
     CommonModule,

@@ -12,7 +12,7 @@ export class PokemonService {
     private http: HttpClient
   ) {  }
 
-  public getPokemons(): Promise<any>{
+  public getPokemonsAPI(): Promise<any>{
     return new Promise((resolve, reject) => {
       const headers = {
         'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ export class PokemonService {
   }
 
 
-  public getPokemonData(url: string, pokedex: Pokemon[]): Promise<Pokemon[]>{
+  public getPokemons(pokedex: Pokemon[]): Promise<Pokemon[]>{
     return new Promise((resolve, reject) => {
       const headers = {
         'Content-Type': 'application/json'
