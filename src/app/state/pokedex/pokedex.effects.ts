@@ -17,15 +17,18 @@ export class PokedexEffects {
   pokemonGetAll$ = createEffect(() => {
     console.log()
     return this.actions.pipe(
-    ofType(PokeActions.pokemonGetAll),
-    exhaustMap((action) => from(this.pokemonService.getPokemons(action.pokemon)).pipe(
-      map((pokemon: any) =>{
-        return PokeActions.pokemonGetAllSuccess({pokemon})
+      ofType(PokeActions.pokemonGetAll),
+      exhaustMap((action) => {
+        return from(this.pokemonService.getPokemons(action.pokemons)).pipe(
+          map((pokedexFull: any) => {
+            return PokeActions.pokemonGetAllSuccess({ pokemons: this.pokemonService.filterPokemons(pokedexFull, action.rank) })
+          })
+        )
       })
-    ))
     )
   },
-  {dispatch: true})
+    { dispatch: true }
+    )
 
   pokemonGetAllSuccess$ = createEffect(() => {
     return this.actions.pipe(
@@ -33,9 +36,19 @@ export class PokedexEffects {
       tap(() => {
         console.log('pokedex')
       })
-    )},
-    {dispatch: false}
+    )
+  },
+    { dispatch: false }
   );
+
+
+  logOut$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(PokeActions.logOut)
+    )
+  },
+    { dispatch: false }
+  )
 
 }
 

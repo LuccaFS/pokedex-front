@@ -2,6 +2,7 @@ import { ShinyComponent } from './../../components/shiny/shiny.component';
 import { BattleComponent } from './../../components/battle/battle.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -20,7 +21,8 @@ import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   exports: [HomeComponent]
 })

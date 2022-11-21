@@ -1,10 +1,13 @@
-<div class="p-10 md:overflow-y-auto">
-  <div class="grid gap-2 grid-cols-3 place-items-center" *ngIf="filterOpt">
-    <button class="button" (click)="filterStarter()">Starters</button>
-    <button class="button" (click)="filterPseudo()">Pseudo</button>
-    <button class="button" (click)="filterLegend()">Legendary/Mythical</button>
-    <br>
+<header class="sticky top-0 z-50 px-10 py-5 bg-white">
+ <div class="relative ">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+    </div>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" (ngModelChange)="filterSearch($event)">
   </div>
+</header>
+
+<div class="p-10 md:overflow-y-auto">
   <div class="grid gap-2 grid-cols-3 place-items-center text-center">
     <ng-container *ngFor="let Pokemon of PokemonList">
       <div class="box-border w-4/5">

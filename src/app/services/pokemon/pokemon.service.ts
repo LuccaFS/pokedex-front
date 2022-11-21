@@ -28,6 +28,7 @@ export class PokemonService {
 
 
   public getPokemons(pokedex: Pokemon[]): Promise<Pokemon[]>{
+    pokedex = [];
     return new Promise((resolve, reject) => {
       const headers = {
         'Content-Type': 'application/json'
@@ -44,6 +45,20 @@ export class PokemonService {
         }
       )
     });
+  }
+
+  public filterPokemons(pokedex: Pokemon[], rank: string): Pokemon[]{
+        if(rank == 'Pokeball'){
+          pokedex = pokedex.filter((s => s.isStarter));
+        }
+        else if(rank == 'Greatball'){
+          pokedex = pokedex.filter((s => !s.isPseudo && !s.isLegendary));
+        }
+        else if(rank == 'Ultraball'){
+          pokedex = pokedex.filter((s => !s.isLegendary));
+        }
+        console.log(pokedex)
+        return pokedex;
   }
 
 

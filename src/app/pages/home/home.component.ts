@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Pokemon } from 'src/app/interfaces/pokemon.model';
 import * as AuthActions from '../../state/auth/auth.actions';
 import * as fromAuth from '../../state/auth/auth.reducer';
+import * as PokeActions from '../../state/pokedex/pokedex.actions';
+import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +16,15 @@ export class HomeComponent implements OnInit {
   title = 'Pokedex';
 
 
-  public userName = '';
+  public Pokemons: Pokemon[]  = [];
+
+  public userName: string | null = null;
+  public userRank: string | null = null;
 
   constructor(
     private store: Store,
     private _store: Store<fromAuth.State>,
+    private _storeP: Store<fromPokedex.State>,
     private route: ActivatedRoute,
     private router: Router
     //private _sanitazer: DomSanitazer
@@ -27,8 +34,15 @@ export class HomeComponent implements OnInit {
     //get token from state
     //auth token
     this.store.dispatch(AuthActions.getUserName());
-    //get auth user name from state
+    this.store.dispatch(AuthActions.getUserRole());
+    console.log(this.Pokemons)
+    //get auth user name and role from state
     this._store.select(fromAuth.selectUser).subscribe((user:any) => this.userName = user);
+    this._store.select(fromAuth.selectRank).subscribe((user:any) => {
+      if(user!== null ){ //get Pokemons
+      console.log(user)
+      this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user}));
+    }});
 
   }
 
@@ -46,7 +60,10 @@ export class HomeComponent implements OnInit {
 
 
   public signOut(){
+    this.Pokemons = [];
+    this.userName = this.userRank = null;
     this.store.dispatch(AuthActions.logOut());
+    this.store.dispatch(PokeActions.logOut());
   }
 
 

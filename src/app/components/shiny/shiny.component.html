@@ -1,1 +1,5 @@
-<p>shiny works!</p>
+<div class="p-20">
+  <select [ngModel]="selectedName" (ngModelChange)="selected($event)" name="sel3">
+    <option *ngFor="let pokemon of PokemonList">{{pokemon.dsName}}</option>
+  </select>
+</div>
