@@ -1,27 +1,18 @@
-# PocFront
+# Pokedex Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
+This project uses Angular (v. 14.2.3); tailwind (v. 3.2.3); NgRx (v. 14.3.1); postcss (v. 8.4.18); JSON Web Tokens.
 
-## Development server
+A fan made pokedex with a shiny hunt counter screen. pulling data from a BackEnd project (https://github.com/LuccaFS/pokedex-back) and images from the PokedexAPI (https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Pages
 
-## Code scaffolding
+## Pokedex
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![image](https://user-images.githubusercontent.com/55240939/203316347-dfb2badd-1407-4e58-9520-f2561ca2d1f1.png)
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Shiny Hunt
 
-## Running unit tests
+![image](https://user-images.githubusercontent.com/55240939/203316476-db8cebf4-d4df-4200-bcb1-bbaf9db19b31.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
