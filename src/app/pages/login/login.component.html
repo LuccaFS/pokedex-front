@@ -3,14 +3,14 @@
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div>
       <label for="Email">Trainer E-mail:</label>
-      <input id="Email" type="text" formControlName="email" autocomplete="off">
+      <input id="Email" type="text" formControlName="email" autocomplete="off" oninput="this.value = this.value.toLowerCase()">
     </div>
     <br>
     <div>
       <label>Password:</label>
       <input id="Password" type="password" formControlName="password">
     </div><br><br>
-    <button class="button" type="submit" [disabled]="!loginForm.valid">Login</button>
+    <button class="auth-button" type="submit" [disabled]="!loginForm.valid">Login</button>
   </form>
 
   <br>

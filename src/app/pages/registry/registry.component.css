@@ -45,23 +45,5 @@ span{
   padding-left: 7px;
 }
 
-button{
-  width: 300px;
-  height: 30px;
-  border: none;
-  border-radius: 17px;
-  padding-left: 7px;
-  color: white;
-  background: blue;
-}
 
-button:disabled{
-  width: 300px;
-  height: 30px;
-  border: none;
-  border-radius: 17px;
-  padding-left: 7px;
-  color: white;
-  background: lightblue;
-}
 
