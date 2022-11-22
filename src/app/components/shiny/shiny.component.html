@@ -1,5 +1,30 @@
-<div class="p-20">
-  <select [ngModel]="selectedName" (ngModelChange)="selected($event)" name="sel3">
-    <option *ngFor="let pokemon of PokemonList">{{pokemon.dsName}}</option>
-  </select>
+<div style="height: 80vh;">
+  <div class="grid grid-cols-2 p-10 content-center vertical-align: middle;">
+    <select [ngModel]="selectedName" (ngModelChange)="selected($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-fit p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <option *ngFor="let pokemon of PokemonList">{{pokemon.dsName}}</option>
+    </select>
+    <div class="grid grid-cols-2 place-items-center text-center content-center">
+      <span class="Type {{ Pokemon?.type1 }}">{{ Pokemon?.type1 }}</span>
+      <span class="Type {{ Pokemon?.type2 }}">{{ Pokemon?.type2 }}</span>
+      <br><br>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 place-items-center text-center content-center h-1/2 mb-20" *ngIf="Pokemon?.image">
+    <!--<img *ngIf="Pokemon?.image" class="inline p-10 justify-center" [src]="Pokemon?.image" [alt]="Pokemon?.dsName" />-->
+    <img class="inline p-10 justify-center" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{{Pokemon?.idPokemon}}.png" [alt]="Pokemon?.dsName" />
+    <img class="inline p-10 justify-center" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/{{Pokemon?.idPokemon}}.png" [alt]="Pokemon?.dsName + ' Shiny'" />
+  </div>
+
+  <div class="grid grid-cols-3 place-items-center text-center content-center mt-15">
+    <button (click)="resetCounter()" type="button" class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2">Reset</button>
+    {{counter}}
+    <div class="w-fit">
+      <button (click)="encounter()" type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full">
+        <span *ngIf="!Pokemon?.isStarter">New Encounter</span>
+        <span *ngIf="Pokemon?.isStarter">New Hatch</span>
+      </button><br>
+      <button (click)="undoCounter()" type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full">Undo</button>
+    </div>
+  </div>
 </div>

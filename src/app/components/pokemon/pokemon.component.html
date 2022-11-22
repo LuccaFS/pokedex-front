@@ -15,7 +15,9 @@
           <h2 class="number">#{{ Pokemon.idPokemon }}</h2>
           <h2 class="gen">Gen:{{ Pokemon.generation }}</h2>
           <br>
-          <img class="inline p-10 justify-center" [src]="Pokemon.image" [alt]="Pokemon.dsName" /><br />
+          <img class="inline p-10 justify-center"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{{Pokemon?.idPokemon}}.png"
+          [alt]="Pokemon.dsName" /><br />
         </div>
         - <b>{{ Pokemon.dsName }}</b> - <br />
         <div class="grid grid-cols-2 place-items-center ">

@@ -37,15 +37,30 @@ export class PokemonService {
         (pokemon: any) => {
           pokemon.forEach((element: any) => {
             element.type1 = element.type1.trim();
-            element.type2!=null? element.type2 = element.type2.trim() : null;
+            element.type2!=null ? element.type2 = element.type2.trim() : null;
             pokedex.push(element)
           });
-          console.log(pokedex)
           resolve(pokedex)
         }
       )
     });
   }
+
+  public getPokemonByName(name: string): Promise<Pokemon>{
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      this.http.get("https://localhost:5001/api/Pokemon/GetByName?PokeName="+name).subscribe(
+        (pokemon: any) => {
+          pokemon.type1 = pokemon.type1.trim();
+          pokemon.type2!=null? pokemon.type2 = pokemon.type2.trim() : null;
+          resolve(pokemon)
+        }
+      )
+    });
+  }
+
 
   public filterPokemons(pokedex: Pokemon[], rank: string): Pokemon[]{
         if(rank == 'Pokeball'){
@@ -57,7 +72,6 @@ export class PokemonService {
         else if(rank == 'Ultraball'){
           pokedex = pokedex.filter((s => !s.isLegendary));
         }
-        console.log(pokedex)
         return pokedex;
   }
 

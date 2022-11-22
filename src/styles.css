@@ -1,3 +1,119 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+.auth-button{
+  width: 300px;
+  height: 30px;
+  border: none;
+  border-radius: 17px;
+  padding-left: 7px;
+  color: white;
+  background-color: blue;
+}
+
+.auth-button:disabled{
+  width: 300px;
+  height: 30px;
+  border: none;
+  border-radius: 17px;
+  padding-left: 7px;
+  color: white;
+  background: lightblue;
+}
+
+
+
+/* Types */
+.Type{
+  border: 2px;
+  border-color: white;
+  border-radius: 15px;
+  font-weight: bold;
+  width: 90%;
+  height: 25px;
+  float: left;
+}
+
+.Grass{
+  background-color: rgb(22, 171, 29);
+}
+
+.Fire{
+  background-color: rgb(235, 112, 42);
+  color: white;
+}
+
+.Water{
+  background-color: rgb(32, 103, 211);
+  color: white;
+}
+
+.Electric{
+  background-color: rgb(255, 247, 20);
+}
+
+.Normal{
+  background-color: rgb(168, 167, 167);
+}
+
+.Ghost{
+  background-color: rgb(112, 6, 112);
+  color: white;
+}
+
+.Dark{
+  background-color: rgb(21, 1, 17);
+  color: white;
+}
+
+.Fighting{
+  background-color: rgb(181, 4, 4);
+  color: white;
+}
+
+.Ice{
+  background-color: rgb(34, 226, 232);
+}
+
+.Poison{
+  background-color: rgb(190, 59, 147);
+  color: white;
+}
+
+.Fairy{
+  background-color: rgb(236, 104, 208);
+}
+
+.Dragon{
+  background-color: rgb(76, 49, 176);
+  color: white;
+}
+
+.Steel{
+  background-color: rgb(101, 101, 95);
+  color: white;
+}
+
+.Rock{
+  background-color: rgb(129, 129, 33);
+  color: white;
+}
+
+.Ground{
+  background-color: rgb(189, 128, 7);
+}
+
+.Psychic{
+  background-color: rgb(212, 14, 205);
+}
+
+.Bug{
+  background-color: rgb(116, 181, 110);
+  color: white;
+}
+
+.Flying{
+  background-color: rgb(143, 192, 229);
+}

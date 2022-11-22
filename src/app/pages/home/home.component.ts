@@ -35,12 +35,10 @@ export class HomeComponent implements OnInit {
     //auth token
     this.store.dispatch(AuthActions.getUserName());
     this.store.dispatch(AuthActions.getUserRole());
-    console.log(this.Pokemons)
     //get auth user name and role from state
     this._store.select(fromAuth.selectUser).subscribe((user:any) => this.userName = user);
     this._store.select(fromAuth.selectRank).subscribe((user:any) => {
       if(user!== null ){ //get Pokemons
-      console.log(user)
       this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user}));
     }});
 
