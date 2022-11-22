@@ -15,7 +15,6 @@ export class PokedexEffects {
   ) { }
 
   pokemonGetAll$ = createEffect(() => {
-    console.log()
     return this.actions.pipe(
       ofType(PokeActions.pokemonGetAll),
       exhaustMap((action) => {
@@ -26,9 +25,7 @@ export class PokedexEffects {
         )
       })
     )
-  },
-    { dispatch: true }
-    )
+  })
 
   pokemonGetAllSuccess$ = createEffect(() => {
     return this.actions.pipe(
