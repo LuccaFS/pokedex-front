@@ -2,7 +2,7 @@
 
 This project uses Angular (v. 14.2.3); tailwind (v. 3.2.3); NgRx (v. 14.3.1); postcss (v. 8.4.18); JSON Web Tokens.
 
-A fan made pokedex with a shiny hunt counter screen. pulling data from a BackEnd project (https://github.com/LuccaFS/pokedex-back) and images from the PokedexAPI (https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/)
+A fan made pokedex with a shiny hunt counter screen. pulling data from a BackEnd project (https://github.com/LuccaFS/pokedex-back) and images from the PokedexAPI (https://pokeapi.co | images link https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/)
 
 ### Pages
 
