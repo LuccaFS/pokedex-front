@@ -1,1 +1,28 @@
 <p>battle works!</p>
+
+<div class="grid gap-2 grid-cols-2 place-items-center text-center">
+  <ng-container *ngFor="let Pokemon of PokeBattle; let i = index">
+    <div class="box-border w-4/5">
+      <div>
+        <img class="inline p-10 justify-center"
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{{Pokemon?.idPokemon}}.png"
+        [alt]="Pokemon?.dsName" /><br />
+      </div>
+      - <b>{{ Pokemon?.dsName }}</b> - <br />
+      <div class="grid grid-cols-2 place-items-center ">
+        <span class="Type {{ Pokemon?.type1 }}">{{ Pokemon?.type1 }}</span>
+        <span class="Type {{ Pokemon?.type2 }}">{{ Pokemon?.type2 }}</span>
+        <br><br>
+      </div>
+      <div class="grid gap-2 grid-cols-2 place-items-center text-center">
+        <ng-container *ngFor="let move of attacks[i]">
+          <button  [disabled]="turn!=i" (click)="makeMove(move)"
+          class="Turn {{move.type}} block max-w-sm p-6 h-32 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700" style="width: -webkit-fill-available">
+            <p class="mb-2 text-lg font-bold tracking-tight">{{move.name}}</p>
+            <p class="font-normal dark:text-gray-400 text-left">{{move.type}}</p>
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

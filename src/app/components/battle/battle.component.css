@@ -1,0 +1,82 @@
+.Turn:enabled{
+  border-width: 5px;
+}
+
+.Turn:disabled{
+  color: gray;
+  cursor: not-allowed;
+}
+
+
+
+.grass:enabled{
+  border-color: rgb(22, 171, 29);
+}
+
+.fire:enabled{
+  border-color: rgb(235, 112, 42);
+}
+
+.water:enabled{
+  border-color: rgb(32, 103, 211);
+}
+
+.electric:enabled{
+  border-color: rgb(255, 247, 20);
+}
+
+.normal:enabled{
+  border-color: rgb(168, 167, 167);
+}
+
+.ghost:enabled{
+  border-color: rgb(112, 6, 112);
+}
+
+.dark:enabled{
+  border-color: rgb(21, 1, 17);
+}
+
+.fighting:enabled{
+  border-color: rgb(181, 4, 4);
+}
+
+.ice:enabled{
+  border-color: rgb(34, 226, 232);
+}
+
+.poison:enabled{
+  border-color: rgb(190, 59, 147);
+}
+
+.fairy:enabled{
+  border-color: rgb(236, 104, 208);
+}
+
+.dragon:enabled{
+  border-color: rgb(76, 49, 176);
+}
+
+.steel:enabled{
+  border-color: rgb(101, 101, 95);
+}
+
+.rock:enabled{
+  border-color: rgb(129, 129, 33);
+}
+
+.ground:enabled{
+  border-color: rgb(189, 128, 7);
+}
+
+.psychic:enabled{
+  border-color: rgb(212, 14, 205);
+}
+
+.bug:enabled{
+  border-color: rgb(116, 181, 110);
+}
+
+.flying:enabled{
+  border-color: rgb(143, 192, 229);
+}
