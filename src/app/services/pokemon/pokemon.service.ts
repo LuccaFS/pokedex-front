@@ -12,21 +12,6 @@ export class PokemonService {
     private http: HttpClient
   ) {  }
 
-  public getPokemonsAPI(): Promise<any>{
-    return new Promise((resolve, reject) => {
-      const headers = {
-        'Content-Type': 'application/json'
-      };
-      this.http.get('https://pokeapi.co/api/v2/pokemon?limit=898&offset=0').subscribe(
-        (pokemons: any) => {
-          resolve(pokemons)
-        }
-      )
-    })
-
-  }
-
-
   public getPokemons(pokedex: Pokemon[]): Promise<Pokemon[]>{
     pokedex = [];
     return new Promise((resolve, reject) => {
@@ -48,10 +33,19 @@ export class PokemonService {
 
   public getPokemonByName(name: string): Promise<Pokemon>{
     return new Promise((resolve, reject) => {
-      const headers = {
-        'Content-Type': 'application/json'
-      };
       this.http.get("https://localhost:5001/api/Pokemon/GetByName?PokeName="+name).subscribe(
+        (pokemon: any) => {
+          pokemon.type1 = pokemon.type1.trim();
+          pokemon.type2!=null? pokemon.type2 = pokemon.type2.trim() : null;
+          resolve(pokemon)
+        }
+      )
+    });
+  }
+
+  public getPokemonById(id: string): Promise<Pokemon>{
+    return new Promise((resolve, reject) => {
+      this.http.get("https://localhost:5001/api/Pokemon/GetById?PokeId="+id).subscribe(
         (pokemon: any) => {
           pokemon.type1 = pokemon.type1.trim();
           pokemon.type2!=null? pokemon.type2 = pokemon.type2.trim() : null;
@@ -74,6 +68,36 @@ export class PokemonService {
         }
         return pokedex;
   }
+
+
+
+  public getPokemonsAPI(): Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.http.get('https://pokeapi.co/api/v2/pokemon?limit=898&offset=0').subscribe(
+        (pokemons: any) => {
+          resolve(pokemons)
+        }
+      )
+    })
+
+  }
+
+  public getMoveAPI(moveNumber: number):  Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.http.get('https://pokeapi.co/api/v2/move/'+moveNumber+'/').subscribe(
+        (data: any) => {
+          let move = {
+            name: data.name.replace('-', ' '),
+            type: data.type.name,
+            damage: data.power,
+            accuracy: data.accuracy
+          }
+          resolve(move)
+        }
+      )
+    })
+  }
+
 
 
 }

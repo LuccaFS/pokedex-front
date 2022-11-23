@@ -48,7 +48,7 @@ export class ShinyComponent implements OnInit {
 
   public selected(event: any) {
     this.selectedName = event
-    this.pokedex.getPokemonByName(event).then((pokemon) => this.Pokemon = pokemon);
+    this.Pokemon = this.PokemonList.find(pokemon => pokemon.dsName == event);
   }
 
   public encounter(){
