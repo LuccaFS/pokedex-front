@@ -38,7 +38,11 @@ export class PokemonComponent implements OnInit {
 
   filterSearch(searchValue: any){
     this.PokemonList = this.Pokemons.filter((item: Pokemon) => {
-      return item.dsName.toLowerCase().includes(searchValue.toLowerCase());
+      if(searchValue=="ub"){
+        return item.idPokemon>792 && item.idPokemon<807;
+      }else{
+        return item.dsName.toLowerCase().includes(searchValue.toLowerCase()) || item.idPokemon == +searchValue;
+      }
     });
   }
 
