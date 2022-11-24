@@ -1,4 +1,3 @@
-import { getUserName } from './../../state/auth/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/interfaces/pokemon.model';
 import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
@@ -30,11 +29,11 @@ export class ShinyComponent implements OnInit {
   ngOnInit() {
 
     this._storeA.select(fromAuth.selectUser).subscribe((user:any) => {
-      this.userName = user;
+      this.userName = user?.dsName;
       let counterOld: any = localStorage.getItem('counter');
       if(counterOld != null){
         counterOld = JSON.parse(counterOld);
-        if(user == counterOld.user){
+        if(this.userName == counterOld.user){
           this.selectedName = counterOld.name
           this.counter = counterOld.count;
         }

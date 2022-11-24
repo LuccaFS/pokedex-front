@@ -47,9 +47,9 @@ export class RegistryComponent implements OnInit {
 
     if(pass == confirmPass){
       let newUser: NewUser = {
-      DsName: this.registerForm.controls['name'].value,
-      DsEmail: this.registerForm.controls['email'].value,
-      DsPassword: this.registerForm.controls['password'].value
+      dsName: this.registerForm.controls['name'].value,
+      dsEmail: this.registerForm.controls['email'].value,
+      dsPassword: this.registerForm.controls['password'].value
       }
 
       this.store.dispatch(AuthActions.register({newUser}));

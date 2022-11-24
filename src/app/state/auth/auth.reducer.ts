@@ -1,17 +1,16 @@
 import { Action, createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store"
-import { getUserNameSuccess, getUserRoleSuccess, loginFailure, loginSuccess, logOut } from "./auth.actions";
+import { User } from "src/app/interfaces/user.model";
+import { getUserSuccess, loginFailure, loginSuccess, logOut } from "./auth.actions";
 
 export interface State{
   token: string | null,
-  userName: string | null
-  userRank: string | null
+  user: User | null
   errorMessage?: string;
 }
 
 export const initialState: State = {
   token: null,
-  userName: null,
-  userRank: null
+  user: null
 }
 
 const _authReducer = createReducer(
@@ -26,23 +25,18 @@ const _authReducer = createReducer(
     return {
       ...state,
       token: null,
-      userName: null,
+      user: null,
       errorMessage: error.responseMessage
     }
   }),
   on(logOut, () => {
+    console.log("Logout")
     return initialState;
   }),
-  on(getUserNameSuccess, (state, {user}) => {
+  on(getUserSuccess, (state, {user}) => {
     return {
       ...state,
-      userName: user
-    }
-  }),
-  on(getUserRoleSuccess, (state, {user}) => {
-    return {
-      ...state,
-      userRank: user
+      user: user
     }
   })
 );
@@ -60,11 +54,21 @@ export const selectToken = createSelector(
 
 export const selectUser = createSelector(
   selectAuthState,
-  (state: State) => state.userName
+  (state: State) => state.user
+);
+
+export const selectName = createSelector(
+  selectAuthState,
+  (state: State) => state.user?.dsName
 );
 
 export const selectRank = createSelector(
   selectAuthState,
-  (state: State) => state.userRank
+  (state: State) => state.user?.dsRank
+);
+
+export const selectId = createSelector(
+  selectAuthState,
+  (state: State) => state.user?.id
 );
 

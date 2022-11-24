@@ -33,13 +33,12 @@ export class HomeComponent implements OnInit {
   async ngOnInit(){
     //get token from state
     //auth token
-    this.store.dispatch(AuthActions.getUserName());
-    this.store.dispatch(AuthActions.getUserRole());
+    this.store.dispatch(AuthActions.getUser());
     //get auth user name and role from state
-    this._store.select(fromAuth.selectUser).subscribe((user:any) => this.userName = user);
-    this._store.select(fromAuth.selectRank).subscribe((user:any) => {
+    this._store.select(fromAuth.selectName).subscribe((user:any) => this.userName = user);
+    this._store.select(fromAuth.selectUser).subscribe((user:any) => {
       if(user!== null ){ //get Pokemons
-      this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user}));
+      this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user.dsRank}));
     }});
 
   }

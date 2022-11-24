@@ -1,10 +1,16 @@
 export interface NewUser{
-  DsName: string,
-  DsEmail: string,
-  DsPassword: String
+  dsName: string,
+  dsEmail: string,
+  dsPassword: string
 }
 
 export interface Login{
-  DsEmail: string,
-  DsPassword: string
+  dsEmail: string,
+  dsPassword: string
+}
+
+export interface User{
+  id: number,
+  dsName: string,
+  dsRank: string
 }

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { NewUser, Login } from './../../interfaces/user.model';
+import { NewUser, Login, User } from './../../interfaces/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -49,12 +49,12 @@ export class AuthService {
       });
   }
 
-  public async getName(): Promise<string>{
+  public async getUser(): Promise<User>{
     return new Promise((resolve, reject) => {
-      this.http.get("https://localhost:5001/api/Access/GetName")
+      this.http.get("https://localhost:5001/api/Access/GetUser")
       .subscribe(
         (response: any) => {
-          resolve(response.responseMessage);
+          resolve(response);
         },
         (err: HttpErrorResponse) => {
           this.route.navigate(['/login']);

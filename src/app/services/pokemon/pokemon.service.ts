@@ -21,8 +21,8 @@ export class PokemonService {
       this.http.get("https://localhost:5001/api/Pokemon/GetAll").subscribe(
         (pokemon: any) => {
           pokemon.forEach((element: any) => {
-            element.type1 = element.type1.trim();
-            element.type2!=null ? element.type2 = element.type2.trim() : null;
+            element.type1 = element.type1;
+            element.type2!=null ? element.type2 = element.type2 : null;
             pokedex.push(element)
           });
           resolve(pokedex)
@@ -35,8 +35,8 @@ export class PokemonService {
     return new Promise((resolve, reject) => {
       this.http.get("https://localhost:5001/api/Pokemon/GetByName?PokeName="+name).subscribe(
         (pokemon: any) => {
-          pokemon.type1 = pokemon.type1.trim();
-          pokemon.type2!=null? pokemon.type2 = pokemon.type2.trim() : null;
+          pokemon.type1 = pokemon.type1;
+          pokemon.type2!=null? pokemon.type2 = pokemon.type2 : null;
           resolve(pokemon)
         }
       )
@@ -47,8 +47,8 @@ export class PokemonService {
     return new Promise((resolve, reject) => {
       this.http.get("https://localhost:5001/api/Pokemon/GetById?PokeId="+id).subscribe(
         (pokemon: any) => {
-          pokemon.type1 = pokemon.type1.trim();
-          pokemon.type2!=null? pokemon.type2 = pokemon.type2.trim() : null;
+          pokemon.type1 = pokemon.type1;
+          pokemon.type2!=null? pokemon.type2 = pokemon.type2 : null;
           resolve(pokemon)
         }
       )

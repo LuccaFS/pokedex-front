@@ -100,22 +100,10 @@ export class AuthEffects {
   //get user name by sending jwt token
   getUserName$ = createEffect(()=>{
     return this.actions.pipe(
-      ofType(AuthActions.getUserName),
-      exhaustMap(() =>  from(this.authService.getName()).pipe(
+      ofType(AuthActions.getUser),
+      exhaustMap(() =>  from(this.authService.getUser()).pipe(
         map((user) =>
-          AuthActions.getUserNameSuccess({ user })
-        )
-      ))
-    );
-    })
-
-    //get user name by sending jwt token
-  getUserRole$ = createEffect(()=>{
-    return this.actions.pipe(
-      ofType(AuthActions.getUserRole),
-      exhaustMap(() =>  from(this.authService.getRank()).pipe(
-        map((user) =>
-          AuthActions.getUserRoleSuccess({ user })
+          AuthActions.getUserSuccess({ user })
         )
       ))
     );

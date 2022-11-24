@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
 
   login(){
     let login: Login = {
-      DsEmail: this.loginForm.controls['email'].value,
-      DsPassword: this.loginForm.controls['password'].value
+      dsEmail: this.loginForm.controls['email'].value,
+      dsPassword: this.loginForm.controls['password'].value
     }
 
     this.store.dispatch(AuthActions.loginRequest({login}));

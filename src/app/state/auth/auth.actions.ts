@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ResponseModel } from 'src/app/interfaces/response.model';
-import { Login } from 'src/app/interfaces/user.model';
+import { Login, User } from 'src/app/interfaces/user.model';
 import { NewUser } from './../../interfaces/user.model';
 
 
@@ -43,22 +43,14 @@ export const registerFailure = createAction(
 
 
 //GET USER
-export const getUserName = createAction(
-  '[string] Get User Name'
+export const getUser = createAction(
+  '[string] Get User'
 );
 
-export const getUserNameSuccess = createAction(
-  '[string] Get User Name Success',
-  props<{user: string}>()
+export const getUserSuccess = createAction(
+  '[string] Get User Success',
+  props<{user: User}>()
 );
 
-export const getUserRole = createAction(
-  '[string] Get User Role'
-);
-
-export const getUserRoleSuccess = createAction(
-  '[string] Get User Role Success',
-  props<{user: string}>()
-);
 
 
