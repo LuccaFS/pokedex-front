@@ -1,15 +1,15 @@
+import { ShinyHunt } from './../../interfaces/pokemon.model';
 import { Action, createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store"
 import { Pokemon } from "src/app/interfaces/pokemon.model";
-import { logOut, pokemonGetAllSuccess } from "./pokedex.actions";
+import { logOut, pokemonGetAllSuccess, shinyGetHuntsSuccess } from "./pokedex.actions";
 
 export interface State{
   pokemonList: Pokemon[],
-  hasLoaded: boolean
+  shinyHunts?: ShinyHunt[]
 }
 
 export const initialState: State = {
-  pokemonList: [],
-  hasLoaded: false
+  pokemonList: []
 }
 
 const _pokedexReducer = createReducer(
@@ -17,8 +17,13 @@ const _pokedexReducer = createReducer(
   on(pokemonGetAllSuccess, (state, {pokemons}) => {
     return {
       ...state,
-      pokemonList: pokemons,
-      hasLoaded: true
+      pokemonList: pokemons
+    }
+  }),
+  on(shinyGetHuntsSuccess, (state, {shinies}) =>{
+    return {
+      ...state,
+      shinyHunts: shinies
     }
   }),
   on(logOut, () => {
@@ -36,4 +41,9 @@ export const selectPokedexState =  createFeatureSelector<State>('pokedex');
 export const selectPokemonList = createSelector(
   selectPokedexState,
   (state: State) => state.pokemonList
+);
+
+export const selectShinyList = createSelector(
+  selectPokedexState,
+  (state: State) => state.shinyHunts
 );

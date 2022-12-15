@@ -14,6 +14,8 @@ export class PokedexEffects {
     private pokemonService: PokemonService
   ) { }
 
+
+  //POKEDEX
   pokemonGetAll$ = createEffect(() => {
     return this.actions.pipe(
       ofType(PokeActions.pokemonGetAll),
@@ -32,6 +34,31 @@ export class PokedexEffects {
       ofType(PokeActions.pokemonGetAllSuccess),
       tap(() => {
         console.log('pokedex')
+      })
+    )
+  },
+    { dispatch: false }
+  );
+
+  //SHINY HUNT
+  shinyGetHunts$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(PokeActions.shinyGetHunts),
+      exhaustMap((action) => {
+        return from(this.pokemonService.getShinyHunts(action.id)).pipe(
+          map((shinyList: any) => {
+            return PokeActions.shinyGetHuntsSuccess({ shinies: shinyList })
+          })
+        )
+      })
+    )
+  })
+
+  shinyGetHuntsSuccess$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(PokeActions.shinyGetHuntsSuccess),
+      tap(() => {
+        console.log('shiny hunt')
       })
     )
   },

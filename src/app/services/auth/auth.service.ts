@@ -2,11 +2,14 @@ import { Router } from '@angular/router';
 import { NewUser, Login, User } from './../../interfaces/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  public api = environment.baseUrl + "Access/";
 
   constructor(
     private http: HttpClient,
@@ -18,11 +21,9 @@ export class AuthService {
       const headers = {
           'Content-Type': 'application/json'
         };
-      this.http.post("https://localhost:5001/api/Access/Register", user, {headers}).subscribe(
+      this.http.post(`${this.api}/Register`, user, {headers}).subscribe(
         (response: any) => {
-          //alert("User Created");
           resolve(response);
-          //this.route.navigate(["/login"]);
         },
         (err: HttpErrorResponse) => {
           reject(err.error);
@@ -37,7 +38,7 @@ export class AuthService {
       const headers = {
           'Content-Type': 'application/json'
         };
-      this.http.post("https://localhost:5001/api/Access/Login", user, {headers})
+      this.http.post(`${this.api}/Login`, user, {headers})
       .subscribe(
         (response: any) => {
           resolve(response);
@@ -51,7 +52,7 @@ export class AuthService {
 
   public async getUser(): Promise<User>{
     return new Promise((resolve, reject) => {
-      this.http.get("https://localhost:5001/api/Access/GetUser")
+      this.http.get(`${this.api}/GetUser`)
       .subscribe(
         (response: any) => {
           resolve(response);
@@ -67,7 +68,7 @@ export class AuthService {
 
   public async getRank(): Promise<string>{
     return new Promise((resolve, reject) => {
-      this.http.get("https://localhost:5001/api/Access/GetRank")
+      this.http.get(`${this.api}GetRank`)
       .subscribe(
         (response: any) => {
           resolve(response.responseMessage);
