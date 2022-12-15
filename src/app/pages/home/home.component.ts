@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
     this._store.select(fromAuth.selectUser).subscribe((user:any) => {
       if(user!== null ){ //get Pokemons
       this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user.dsRank}));
+      this.store.dispatch(PokeActions.shinyGetHunts({ id: user.id}));
     }});
 
   }

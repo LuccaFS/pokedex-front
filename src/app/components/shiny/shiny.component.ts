@@ -28,8 +28,12 @@ export class ShinyComponent implements OnInit {
 
   ngOnInit() {
 
-    this._storeA.select(fromAuth.selectUser).subscribe((user:any) => {
-      this.userName = user?.dsName;
+
+      this._storeP.select(fromPokedex.selectShinyList).subscribe((shinyList: any) => {
+        this.selectedName = shinyList[0].pokeName
+        this.counter = shinyList[0].counter
+      })
+      /*this.userName = user?.dsName;
       let counterOld: any = localStorage.getItem('counter');
       if(counterOld != null){
         counterOld = JSON.parse(counterOld);
@@ -37,8 +41,7 @@ export class ShinyComponent implements OnInit {
           this.selectedName = counterOld.name
           this.counter = counterOld.count;
         }
-      }
-    });
+      }*/
 
     this._storeP.select(fromPokedex.selectPokemonList).subscribe((pokeList: any) => this.PokemonList = pokeList)
     this.selected(this.selectedName);

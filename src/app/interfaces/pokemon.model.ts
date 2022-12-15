@@ -9,3 +9,9 @@ export interface Pokemon{
   isPseudo: Boolean;
   isLegendary: Boolean;
 }
+
+export interface ShinyHunt{
+  idTrainer: number,
+  pokeName: string,
+  counter: number
+}
