@@ -48,7 +48,7 @@ export class PokemonService {
 
   public getPokemonById(id: string): Promise<Pokemon>{
     return new Promise((resolve) => {
-      this.http.get(`${this.api}/GetById?PokeId=${id}`).subscribe(
+      this.http.get(`${this.api}GetById?PokeId=${id}`).subscribe(
         (pokemon: any) => {
           pokemon.type1 = pokemon.type1.trim();
           pokemon.type2!=null? pokemon.type2 = pokemon.type2.trim() : null;

@@ -21,7 +21,7 @@ export class AuthService {
       const headers = {
           'Content-Type': 'application/json'
         };
-      this.http.post(`${this.api}/Register`, user, {headers}).subscribe(
+      this.http.post(`${this.api}Register`, user, {headers}).subscribe(
         (response: any) => {
           resolve(response);
         },
@@ -38,7 +38,7 @@ export class AuthService {
       const headers = {
           'Content-Type': 'application/json'
         };
-      this.http.post(`${this.api}/Login`, user, {headers})
+      this.http.post(`${this.api}Login`, user, {headers})
       .subscribe(
         (response: any) => {
           resolve(response);
@@ -52,7 +52,7 @@ export class AuthService {
 
   public async getUser(): Promise<User>{
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.api}/GetUser`)
+      this.http.get(`${this.api}GetUser`)
       .subscribe(
         (response: any) => {
           resolve(response);
