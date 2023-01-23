@@ -60,7 +60,7 @@ export class PokemonComponent implements OnInit {
         return item.idPokemon==232 || item.idPokemon==984 || item.idPokemon==990;
       }else if(searchValue=="volcarona paradox"){
         return item.idPokemon==637 || item.idPokemon==988 || item.idPokemon==994;
-      }else if(searchValue=="cyclizer paradox"){
+      }else if(searchValue=="cyclizar paradox"){
         return item.idPokemon==967 || item.idPokemon==1007 || item.idPokemon==1008;
 
       }else if(searchValue=="jigglypuff paradox"){
