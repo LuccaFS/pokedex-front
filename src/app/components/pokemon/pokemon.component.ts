@@ -47,19 +47,21 @@ export class PokemonComponent implements OnInit {
         return item.idPokemon>792 && item.idPokemon<807;
 
       }else if(searchValue=="paradox"){ //All Paradox
-        return item.idPokemon>=984 && item.idPokemon<=995 || item.idPokemon>=1005 && item.idPokemon<=1006;
+        return item.idPokemon>=984 && item.idPokemon<=995 || item.idPokemon>=1005 && item.idPokemon<=1008;
 
       }else if(searchValue=="paradox past" || searchValue=="past" || searchValue=="past paradox"){ //Past Paradox
-        return item.idPokemon>=984 && item.idPokemon<990 || item.idPokemon==1005;
+        return item.idPokemon>=984 && item.idPokemon<990 || item.idPokemon==1005 || item.idPokemon==1007;
 
       }else if(searchValue=="paradox future"|| searchValue=="future" || searchValue=="future paradox"){ //Future Paradox
-        return item.idPokemon>989 && item.idPokemon<=995 || item.idPokemon==1006;
+        return item.idPokemon>989 && item.idPokemon<=995 || item.idPokemon==1006 || item.idPokemon==1008;
 
       //Specific paradox cases
       }else if(searchValue=="donphan paradox"){
         return item.idPokemon==232 || item.idPokemon==984 || item.idPokemon==990;
       }else if(searchValue=="volcarona paradox"){
         return item.idPokemon==637 || item.idPokemon==988 || item.idPokemon==994;
+      }else if(searchValue=="cyclizer paradox"){
+        return item.idPokemon==967 || item.idPokemon==1007 || item.idPokemon==1008;
 
       }else if(searchValue=="jigglypuff paradox"){
         return item.idPokemon==39 || item.idPokemon==985;
