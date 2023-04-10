@@ -1,4 +1,4 @@
-import { Pokemon, ShinyHunt } from './../../interfaces/pokemon.model';
+import { Pokemon, ShinyHunt, types} from './../../interfaces/pokemon.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { environment } from 'src/environments/environment';
@@ -24,8 +24,8 @@ export class PokemonService {
       this.http.get(`${this.api}GetAll`).subscribe(
         (pokemon: any) => {
           pokemon.forEach((element: any) => {
-            element.type1 = element.type1.trim();
-            element.type2!=null ? element.type2 = element.type2.trim() : null;
+            element.type1 = types[element.type1] //.trim();
+            element.type2!=null ? element.type2 = types[element.type2]  : null;//.trim()
             pokedex.push(element)
           });
           resolve(pokedex)
@@ -72,6 +72,9 @@ export class PokemonService {
     return pokedex;
   }
 
+
+
+
   public saveShinyHunt(hunt: ShinyHunt): Promise<any> {
     return new Promise((resolve) => {
       const headers = {
@@ -89,7 +92,7 @@ export class PokemonService {
   public getShinyHunts(idTrainer: number): Promise<ShinyHunt[]>{
     let huntList = [];
     return new Promise((resolve) => {
-      this.http.get(`${this.api}/Shiny/GetTrainerHunts?idTrainer=${idTrainer}`).subscribe(
+      this.http.get(`${this.api}Shiny/GetTrainerHunts?idTrainer=${idTrainer}`).subscribe(
         (shinies: any) => {
           huntList = shinies;
           resolve(huntList)
