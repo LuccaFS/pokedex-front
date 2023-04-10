@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {  HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { delay, Observable, switchMap, from  } from 'rxjs';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Observable, switchMap, from  } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromAuth from '../state/auth/auth.reducer';

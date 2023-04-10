@@ -9,13 +9,14 @@ export interface State{
 }
 
 export const initialState: State = {
-  token: null,
+  token: localStorage.getItem("Token"),
   user: null
 }
 
 const _authReducer = createReducer(
   initialState,
   on(loginSuccess, (state, {loginResponse}) => {
+    localStorage.setItem("Token", loginResponse.responseMessage);
     return {
       ...state,
     token: loginResponse.responseMessage,
