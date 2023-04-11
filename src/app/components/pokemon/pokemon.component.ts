@@ -1,11 +1,8 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { Pokemon } from '../../interfaces/pokemon.model';
 import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../../state/auth/auth.actions';
-import * as fromAuth from '../../state/auth/auth.reducer';
-import * as PokeActions from '../../state/pokedex/pokedex.actions';
 import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
 
 @Component({
@@ -22,8 +19,6 @@ export class PokemonComponent implements OnInit {
   public searchText = '';
 
   constructor(
-    private store: Store,
-    private _storeA: Store<fromAuth.State>,
     private _storeP: Store<fromPokedex.State>,
     private pokemon: PokemonService
   ) { }
