@@ -1,6 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
 import { Pokemon } from '../../interfaces/pokemon.model';
-import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 import { Store } from '@ngrx/store';
 import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
@@ -20,7 +19,6 @@ export class PokemonComponent implements OnInit {
 
   constructor(
     private _storeP: Store<fromPokedex.State>,
-    private pokemon: PokemonService
   ) { }
 
   ngOnInit() {

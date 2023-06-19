@@ -20,7 +20,7 @@ export class PokedexEffects {
     return this.actions.pipe(
       ofType(PokeActions.pokemonGetAll),
       exhaustMap((action) => {
-        return from(this.pokemonService.getPokemons(action.pokemons)).pipe(
+        return from(this.pokemonService.getPokemons()).pipe(
           map((pokedexFull: any) => {
             return PokeActions.pokemonGetAllSuccess({ pokemons: this.pokemonService.filterPokemons(pokedexFull, action.rank) })
           })

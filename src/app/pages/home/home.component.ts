@@ -6,63 +6,74 @@ import * as AuthActions from '../../state/auth/auth.actions';
 import * as fromAuth from '../../state/auth/auth.reducer';
 import * as PokeActions from '../../state/pokedex/pokedex.actions';
 import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
+import { HubFacade } from 'src/app/state/hub.facade';
+import { User } from 'src/app/interfaces/user.model';
+import { firstValueFrom } from 'rxjs';
+import { PokedexFacade } from 'src/app/state/pokedex/pokedex.facade';
+import { AuthFacade } from 'src/app/state/auth/auth.facade';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   title = 'Pokedex';
 
+  user$ = this.authFacade.user$;
+  token$ = this.authFacade.token$;
 
-  public Pokemons: Pokemon[]  = [];
+  loaded$ = this.authFacade.loaded$;
+  loadedPokedex$ = this.pokeFacade.loadedPokedex$;
+  loadedShiny$ = this.pokeFacade.loadedShiny$;
 
-  public userName: string | null = null;
-  public userRank: string | null = null;
+  user!: User | null;
 
   constructor(
-    private store: Store,
-    private _store: Store<fromAuth.State>,
-    private _storeP: Store<fromPokedex.State>,
+    private authFacade: AuthFacade,
+    private pokeFacade: PokedexFacade,
+    private hubFacade: HubFacade,
     private route: ActivatedRoute,
-    private router: Router
-    //private _sanitazer: DomSanitazer
-  ){ }
+    private router: Router //private _sanitazer: DomSanitazer
+  ) {}
 
-  async ngOnInit(){
+  async ngOnInit() {
     //get token from state
     //auth token
-    this.store.dispatch(AuthActions.getUser());
+    this.authFacade.getUser();
+    if (this.loaded$) {
+      console.log(this.loaded$);
+      this.user$.subscribe((user) => {
+        if (user) {
+          this.user = user;
+          this.pokeFacade.getAllPokemon(this.user);
+          this.pokeFacade.getShinyHunts(this.user);
+        }
+      });
+    }
     //get auth user name and role from state
-    this._store.select(fromAuth.selectName).subscribe((user:any) => this.userName = user);
-    this._store.select(fromAuth.selectUser).subscribe((user:any) => {
-      if(user!== null ){ //get Pokemons
-      this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user.dsRank}));
-      this.store.dispatch(PokeActions.shinyGetHunts({ id: user.id}));
-    }});
-
+    // this._store.select(fromAuth.selectName).subscribe((user:any) => this.userName = user);
+    // this._store.select(fromAuth.selectUser).subscribe((user:any) => {
+    //   if(user!== null ){ //get Pokemons
+    //   this.store.dispatch(PokeActions.pokemonGetAll({pokemons: this.Pokemons, rank: user.dsRank}));
+    //   this.store.dispatch(PokeActions.shinyGetHunts({ id: user.id}));
+    // }});
   }
 
-  pokedex(){
-    this.router.navigate(['pokedex'], {relativeTo:this.route});
+  pokedex() {
+    this.router.navigate(['pokedex'], { relativeTo: this.route });
   }
 
-  battle(){
-    this.router.navigate(['battle'], {relativeTo:this.route});
+  battle() {
+    this.router.navigate(['battle'], { relativeTo: this.route });
   }
 
-  shiny(){
-    this.router.navigate(['shiny'], {relativeTo:this.route});
+  shiny() {
+    this.router.navigate(['shiny'], { relativeTo: this.route });
   }
 
-
-  public signOut(){
-    this.Pokemons = [];
-    this.userName = this.userRank = null;
-    this.store.dispatch(AuthActions.logOut());
-    this.store.dispatch(PokeActions.logOut());
+  public signOut() {
+    this.user = null;
+    this.hubFacade.logOut();
   }
-
-
 }

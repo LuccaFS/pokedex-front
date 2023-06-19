@@ -1,34 +1,31 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
-import { PokeCardComponent } from './poke-card.component';
+import { ShinyComponent } from './shiny.component';
 import { HubFacade } from 'src/app/state/hub.facade';
-import { Store } from '@ngrx/store';
+import { PokedexFacade } from 'src/app/state/pokedex/pokedex.facade';
 
-describe('PokeCardComponent', () => {
-  let component: PokeCardComponent;
-  let fixture: ComponentFixture<PokeCardComponent>;
+describe('ShinyComponent', () => {
+  let component: ShinyComponent;
+  let fixture: ComponentFixture<ShinyComponent>;
 
   let hubFacade: HubFacade;
+  let pokeFacade: PokedexFacade;
   let store: MockStore<{ loggedIn: boolean }>;
   const initialState = { loggedIn: false };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PokeCardComponent],
-      providers: [HubFacade, provideMockStore({ initialState })],
+      declarations: [ShinyComponent],
+      providers: [HubFacade, PokedexFacade, provideMockStore({ initialState })],
     }).compileComponents();
 
-    store = TestBed.get<Store>(Store);
     hubFacade = TestBed.inject(HubFacade);
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PokeCardComponent);
+    pokeFacade = TestBed.inject(PokedexFacade);
+    fixture = TestBed.createComponent(ShinyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

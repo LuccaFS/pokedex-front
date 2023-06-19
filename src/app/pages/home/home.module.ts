@@ -22,7 +22,7 @@ import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
     CommonModule,
     HomeRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   exports: [HomeComponent]
 })

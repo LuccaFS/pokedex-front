@@ -15,8 +15,8 @@ export class PokemonService {
     private http: HttpClient
   ) {  }
 
-  public getPokemons(pokedex: Pokemon[]): Promise<Pokemon[]>{
-    pokedex = [];
+  public getPokemons(): Promise<Pokemon[]>{
+    let pokedex: Pokemon[] = [];
     return new Promise((resolve) => {
       const headers = {
         'Content-Type': 'application/json'

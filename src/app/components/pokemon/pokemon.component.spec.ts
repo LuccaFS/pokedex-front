@@ -1,14 +1,13 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
-import { PokeCardComponent } from './poke-card.component';
+import { PokemonComponent } from './pokemon.component';
 import { HubFacade } from 'src/app/state/hub.facade';
 import { Store } from '@ngrx/store';
 
-describe('PokeCardComponent', () => {
-  let component: PokeCardComponent;
-  let fixture: ComponentFixture<PokeCardComponent>;
+describe('PokemonComponent', () => {
+  let component: PokemonComponent;
+  let fixture: ComponentFixture<PokemonComponent>;
 
   let hubFacade: HubFacade;
   let store: MockStore<{ loggedIn: boolean }>;
@@ -16,7 +15,7 @@ describe('PokeCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PokeCardComponent],
+      declarations: [PokemonComponent],
       providers: [HubFacade, provideMockStore({ initialState })],
     }).compileComponents();
 
@@ -25,7 +24,7 @@ describe('PokeCardComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PokeCardComponent);
+    fixture = TestBed.createComponent(PokemonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,7 +5,7 @@
   >
     <div class="sidebar-header flex items-center justify-center py-4 select-none">
       <div class="block bg-white w-full h-15">
-        <h1>Welcome {{userName}}</h1>
+        <h1>Welcome {{user?.dsName}}</h1>
       </div>
     </div>
     <div class="sidebar-content px-4 py-6 bg-white">
@@ -69,12 +69,15 @@
     </div>
   </aside>
   <main class="main flex flex-col w-screen md:ml-0 transition-all duration-150 ease-in">
-    <div class="main-content flex flex-col p-10">
+    <div class="main-content flex flex-col p-10" *ngIf="(loaded$ | async) && (loadedPokedex$ | async) && (loadedShiny$ | async); else loading">
       <div class="flex flex-col w-full overflow-y-auto border-4 border-gray-400 border-dashed bg-white rounded mt-4" style="height: 85vh;">
         <router-outlet></router-outlet>
       </div>
-
     </div>
+
+    <ng-template #loading>
+        <div class="loader"></div>
+      </ng-template>
 
     <footer class="footer px-4 py-4">
       <div class="footer-content">
@@ -82,5 +85,7 @@
       </div>
     </footer>
   </main>
+
+
 </div>
 
