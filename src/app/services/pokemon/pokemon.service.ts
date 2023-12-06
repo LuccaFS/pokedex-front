@@ -145,19 +145,19 @@ export class PokemonService {
     switch (true) {
       case 151 < id && id <= 251:
         return 2;
-      case 252 < id && id <= 386:
+      case 251 < id && id <= 386:
         return 3;
-      case 387 < id && id <= 493:
+      case 386 < id && id <= 493:
         return 4;
-      case 494 < id && id <= 649:
+      case 493 < id && id <= 649:
         return 5;
-      case 650 < id && id <= 721:
+      case 649 < id && id <= 721:
         return 6;
-      case 722 < id && id <= 809:
+      case 721 < id && id <= 809:
         return 7;
-      case 810 < id && id <= 905:
+      case 809 < id && id <= 905:
         return 8;
-      case 906 < id && id <= 1021:
+      case 905 < id && id <= 1021:
         return 9;
       default:
         return 1;
