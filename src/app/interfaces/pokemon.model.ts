@@ -1,22 +1,22 @@
-export interface Pokemon{
-  idPokemon: number,
-  dsName: string,
-  type1: string,
-  type2: string | null,
-  generation: number,
-  image: any
+export interface Pokemon {
+  idPokemon: number;
+  dsName: string;
+  type1: string;
+  type2: string | null;
+  generation: number;
+  image: any;
   isStarter: Boolean;
   isPseudo: Boolean;
   isLegendary: Boolean;
 }
 
-export interface ShinyHunt{
-  idTrainer: number,
-  pokeName: string,
-  counter: number
+export interface ShinyHunt {
+  idTrainer: number;
+  pokeName: string;
+  counter: number;
 }
 
-export enum types{
+export enum types {
   Normal = 1,
   Ghost = 2,
   Grass = 3,
@@ -34,5 +34,5 @@ export enum types{
   Dragon = 15,
   Dark = 16,
   Steel = 17,
-  Fairy = 18
+  Fairy = 18,
 }
