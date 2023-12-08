@@ -10,6 +10,7 @@ import * as pokeGroups from './pokemon-groups';
 export class PokemonService {
   public api = environment.baseUrl + 'Pokemon/';
   private maxPokemon = 1017;
+  private maxPokemonForms = 1234;
 
   constructor(private http: HttpClient) {}
 
@@ -94,34 +95,37 @@ export class PokemonService {
   public getPokemonsAPI(): Promise<any> {
     let pokedex: Pokemon[] = [];
     return new Promise((resolve) => {
-      this.http
-        .get(
-          `https://pokeapi.co/api/v2/pokemon?limit=${this.maxPokemon}&offset=0`
-        )
-        .subscribe((pokemons: any) => {
-          pokemons.results.forEach((element: any) => {
-            this.http.get(element.url).subscribe((pokemon: any) => {
-              let poke: Pokemon = {
-                idPokemon: pokemon.id,
-                dsName: this.capitalizeFirstLetter(pokemon.species.name),
-                type1: this.capitalizeFirstLetter(pokemon.types[0].type.name),
-                type2:
-                  pokemon.types.length > 1
-                    ? this.capitalizeFirstLetter(pokemon.types[1].type.name)
-                    : null,
-                generation: this.findGenaration(pokemon.id),
-                image: pokemon.sprites.other['official-artwork'].front_default,
-                isStarter: pokeGroups.startersId.includes(pokemon.id),
-                isPseudo: pokeGroups.pseudosId.includes(pokemon.id),
-                isLegendary: pokeGroups.allLegendariesId.includes(pokemon.id),
-              };
-              this.sortPokedex(pokedex, poke);
-              if (pokedex.length == this.maxPokemon - 1) {
-                resolve(pokedex);
-              }
-            });
+      for (let i = 1; i <= this.maxPokemon; i++) {
+        this.http
+          .get(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
+          .subscribe((pokemonSpecies: any) => {
+            for (let p = 0; p < pokemonSpecies.varieties.length; p++) {
+              const element = pokemonSpecies.varieties[p];
+              this.http.get(element.pokemon.url).subscribe((pokemon: any) => {
+                let poke: Pokemon = {
+                  idPokemon: i,
+                  dsName: this.adjustPokemonName(element.pokemon.name),
+                  type1: this.adjustPokemonName(pokemon.types[0].type.name),
+                  type2:
+                    pokemon.types.length > 1
+                      ? this.adjustPokemonName(pokemon.types[1].type.name)
+                      : null,
+                  generation: this.findGenaration(pokemonSpecies.id),
+                  image:
+                    pokemon.sprites.other['official-artwork'].front_default,
+                  isStarter: pokeGroups.startersId.includes(pokemon.id),
+                  isPseudo: pokeGroups.pseudosId.includes(pokemon.id),
+                  isLegendary: pokeGroups.allLegendariesId.includes(pokemon.id),
+                };
+                const valid = this.validForms(pokemonSpecies, p);
+                if (valid == p) this.sortPokedex(pokedex, poke);
+                if (pokedex.length >= this.maxPokemonForms - 1) {
+                  resolve(pokedex);
+                }
+              });
+            }
           });
-        });
+      }
     });
   }
 
@@ -164,8 +168,48 @@ export class PokemonService {
     }
   }
 
-  private capitalizeFirstLetter(text: string) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+  private validForms(pokemon: any, index: number): number {
+    const singleFormDisplay = [710, 711, 774, 778, 1007, 1008];
+    switch (true) {
+      case index == 0:
+        return index;
+      case singleFormDisplay.includes(pokemon.id) ||
+        pokemon.varieties[index].pokemon.name.includes('totem'):
+        return pokemon.varieties.length;
+      case pokemon.id == 25 || pokemon.id == 133:
+        return pokemon.varieties.length - 1;
+      default:
+        return index;
+    }
+  }
+
+  private adjustPokemonName(text: string) {
+    const hiffenNameDisplay = [
+      'ho-oh',
+      'type-null',
+      'jangmo-o',
+      'hakamo-o',
+      'kommo-o',
+      'tapu-koko',
+      'tapu-lele',
+      'tapu-bulu',
+      'tapu-fini',
+    ];
+    const singleNameDisplay = ['Pumpkaboo', 'Gourgeist', 'Minior'];
+
+    if (!hiffenNameDisplay.includes(text))
+      text = text.replace('-', ' ').replace('-', ' ').replace('-', ' ');
+    const arr = text.split(' ');
+
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+      if (i == 1)
+        arr[i] = '(' + arr[i].charAt(0).toUpperCase() + arr[i].slice(1) + ')';
+    }
+
+    text = arr.join(' ');
+    if (singleNameDisplay.includes(arr[0])) return arr[0];
+    return text;
   }
 
   private sortPokedex(arr: Pokemon[], val: Pokemon) {
@@ -177,6 +221,7 @@ export class PokemonService {
       i -= 1;
     }
     arr[i] = item;
+    console.log(arr.length);
     return arr;
   }
 }
