@@ -9,7 +9,8 @@ import * as pokeGroups from './pokemon-groups';
 })
 export class PokemonService {
   public api = environment.baseUrl + 'Pokemon/';
-  private maxPokemon = 1017;
+  private maxPokemon = 1025;
+  private maxPokemonForms = 1243;
 
   constructor(private http: HttpClient) {}
 
@@ -94,34 +95,41 @@ export class PokemonService {
   public getPokemonsAPI(): Promise<any> {
     let pokedex: Pokemon[] = [];
     return new Promise((resolve) => {
-      this.http
-        .get(
-          `https://pokeapi.co/api/v2/pokemon?limit=${this.maxPokemon}&offset=0`
-        )
-        .subscribe((pokemons: any) => {
-          pokemons.results.forEach((element: any) => {
-            this.http.get(element.url).subscribe((pokemon: any) => {
-              let poke: Pokemon = {
-                idPokemon: pokemon.id,
-                dsName: this.capitalizeFirstLetter(pokemon.species.name),
-                type1: this.capitalizeFirstLetter(pokemon.types[0].type.name),
-                type2:
-                  pokemon.types.length > 1
-                    ? this.capitalizeFirstLetter(pokemon.types[1].type.name)
-                    : null,
-                generation: this.findGenaration(pokemon.id),
-                image: pokemon.sprites.other['official-artwork'].front_default,
-                isStarter: pokeGroups.startersId.includes(pokemon.id),
-                isPseudo: pokeGroups.pseudosId.includes(pokemon.id),
-                isLegendary: pokeGroups.allLegendariesId.includes(pokemon.id),
-              };
-              this.sortPokedex(pokedex, poke);
-              if (pokedex.length == this.maxPokemon - 1) {
-                resolve(pokedex);
-              }
-            });
+      for (let i = 1; i <= this.maxPokemon; i++) {
+        this.http
+          .get(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
+          .subscribe((pokemonSpecies: any) => {
+            for (let p = 0; p < pokemonSpecies.varieties.length; p++) {
+              const element = pokemonSpecies.varieties[p];
+              this.http.get(element.pokemon.url).subscribe((pokemon: any) => {
+                let poke: Pokemon = {
+                  idPokemon: i,
+                  idForm: p,
+                  dsName: this.adjustPokemonName(element.pokemon.name),
+                  type1: this.adjustPokemonName(pokemon.types[0].type.name),
+                  type2:
+                    pokemon.types.length > 1
+                      ? this.adjustPokemonName(pokemon.types[1].type.name)
+                      : null,
+                  generation: this.findGenaration(
+                    pokemonSpecies.id,
+                    element.pokemon.name
+                  ),
+                  image:
+                    pokemon.sprites.other['official-artwork'].front_default,
+                  isStarter: pokeGroups.startersId.includes(pokemon.id),
+                  isPseudo: pokeGroups.pseudosId.includes(pokemon.id),
+                  isLegendary: pokeGroups.allLegendariesId.includes(pokemon.id),
+                };
+                const valid = this.validForms(pokemonSpecies, p);
+                if (valid == p) this.sortPokedex(pokedex, poke);
+                if (pokedex.length >= this.maxPokemonForms - 1) {
+                  resolve(pokedex);
+                }
+              });
+            }
           });
-        });
+      }
     });
   }
 
@@ -141,42 +149,121 @@ export class PokemonService {
     });
   }
 
-  private findGenaration(id: number): number {
+  private findGenaration(id: number, name: string): number {
     switch (true) {
-      case 151 < id && id <= 251:
-        return 2;
-      case 251 < id && id <= 386:
-        return 3;
-      case 386 < id && id <= 493:
-        return 4;
+      case (905 < id && id <= 1025) || name.includes('paldea'):
+        return 9;
+      case (809 < id && id <= 905) ||
+        name.includes('galar') ||
+        name.includes('hisui') ||
+        name.includes('gmax'):
+        return 8;
+      case (721 < id && id <= 809) || name.includes('alola'):
+        return 7;
+      case (649 < id && id <= 721) ||
+        name.includes('-mega') ||
+        name.includes('primal'):
+        return 6;
       case 493 < id && id <= 649:
         return 5;
-      case 649 < id && id <= 721:
-        return 6;
-      case 721 < id && id <= 809:
-        return 7;
-      case 809 < id && id <= 905:
-        return 8;
-      case 905 < id && id <= 1021:
-        return 9;
+      case 386 < id && id <= 493:
+        return 4;
+      case 251 < id && id <= 386:
+        return 3;
+      case 151 < id && id <= 251:
+        return 2;
       default:
         return 1;
     }
   }
 
-  private capitalizeFirstLetter(text: string) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+  private validForms(pokemon: any, index: number): number {
+    const singleFormDisplay = [710, 711, 774, 778, 1007, 1008];
+    switch (true) {
+      case index == 0:
+        return index;
+      case singleFormDisplay.includes(pokemon.id) ||
+        pokemon.varieties[index].pokemon.name.includes('totem'):
+        return pokemon.varieties.length;
+      case pokemon.id == 25 || pokemon.id == 133:
+        return pokemon.varieties.length - 1;
+      case pokemon.id == 718:
+        return pokemon.varieties[index].pokemon.name.includes('power')
+          ? index + 1
+          : index;
+      default:
+        return index;
+    }
+  }
+
+  private adjustPokemonName(text: string) {
+    const hiffenNameDisplay = [
+      'ho-oh',
+      'type-null',
+      'jangmo-o',
+      'hakamo-o',
+      'kommo-o',
+    ];
+    const singleNameDisplay = ['Pumpkaboo', 'Gourgeist', 'Minior'];
+    const formNameDisplay = [
+      'sunny',
+      'rainy',
+      'snowy',
+      'origin',
+      'ordinary',
+      'resolute',
+      'incarnate',
+      'mega',
+      'primal',
+      'complete',
+      '10',
+      '50',
+      'alola',
+      'original',
+      'gmax',
+      'galar',
+      'hisui',
+      'paldea',
+    ];
+    let form = false;
+
+    if (!hiffenNameDisplay.includes(text)) text = text.replace(/-/gi, ' ');
+    const arr = text.split(' ');
+
+    for (let i = 0; i < arr.length; i++) {
+      if (formNameDisplay.includes(arr[i])) {
+        form = true;
+        arr[i] = '(' + arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+        if (arr[i] == '(10' || arr[i] == '(50') arr[i] += '%';
+        if (i == arr.length - 1) arr[i] += ')';
+      } else {
+        if (i == arr.length - 1 && form) {
+          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1) + ')';
+        } else {
+          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+        }
+      }
+    }
+
+    text = arr.join(' ');
+    if (singleNameDisplay.includes(arr[0])) return arr[0];
+    return text;
   }
 
   private sortPokedex(arr: Pokemon[], val: Pokemon) {
     arr.push(val);
     let i = arr.length - 1;
     let item = arr[i];
-    while (i > 0 && item.idPokemon < arr[i - 1].idPokemon) {
+    while (
+      (i > 0 && item.idPokemon < arr[i - 1].idPokemon) ||
+      (item.idPokemon == arr[i - 1].idPokemon &&
+        item.idForm < arr[i - 1].idForm)
+    ) {
       arr[i] = arr[i - 1];
       i -= 1;
     }
     arr[i] = item;
+    console.log(arr.length);
     return arr;
   }
 }

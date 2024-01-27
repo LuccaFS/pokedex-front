@@ -1,5 +1,6 @@
 export interface Pokemon {
   idPokemon: number;
+  idForm: number;
   dsName: string;
   type1: string;
   type2: string | null;
