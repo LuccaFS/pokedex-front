@@ -1,15 +1,13 @@
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HomeRoutingModule } from './home-routing.module';
+import { provideHttpClient} from '@angular/common/http'
+
+import { HomeComponent } from './home.component';
+import { CommonModule } from '@angular/common';
+import { PokemonComponent } from '../../components/pokemon/pokemon.component';
 import { ShinyComponent } from './../../components/shiny/shiny.component';
 import { BattleComponent } from './../../components/battle/battle.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
-
-import { HttpClientModule} from '@angular/common/http'
-
-import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +19,9 @@ import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    HttpClientModule,
     FormsModule,
   ],
+  providers: [provideHttpClient()],
   exports: [HomeComponent]
 })
 export class HomeModule { }

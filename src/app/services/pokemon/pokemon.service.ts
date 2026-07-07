@@ -1,7 +1,7 @@
 import { Pokemon, ShinyHunt, types } from './../../interfaces/pokemon.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import * as pokeGroups from './pokemon-groups';
 
 @Injectable({

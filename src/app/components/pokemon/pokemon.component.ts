@@ -10,6 +10,7 @@ import * as pokeGroups from '../../services/pokemon/pokemon-groups';
   selector: 'app-pokemon',
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.css'],
+  standalone: false
 })
 export class PokemonComponent implements OnInit {
   title = 'pokedex';

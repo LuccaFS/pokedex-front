@@ -1,6 +1,6 @@
 import { ShinyHunt } from './../../interfaces/pokemon.model';
 import { createAction, props } from '@ngrx/store';
-import { Pokemon } from 'src/app/interfaces/pokemon.model';
+import { Pokemon } from '../../interfaces/pokemon.model';
 
 
 export const pokemonGetAll = createAction(

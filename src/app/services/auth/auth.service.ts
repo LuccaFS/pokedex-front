@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { NewUser, Login, User } from './../../interfaces/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -6,7 +6,7 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { Pokemon } from 'src/app/interfaces/pokemon.model';
+import { Pokemon } from '../../interfaces/pokemon.model';
 import {
   logOut,
   pokemonGetAllSuccess,

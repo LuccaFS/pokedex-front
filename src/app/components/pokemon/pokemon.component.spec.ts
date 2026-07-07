@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-
+import { describe, it, expect, beforeEach } from 'vitest';
 import { PokemonComponent } from './pokemon.component';
-import { HubFacade } from 'src/app/state/hub.facade';
+import { HubFacade } from '../../state/hub.facade';
 import { Store } from '@ngrx/store';
 
 describe('PokemonComponent', () => {
@@ -13,13 +13,13 @@ describe('PokemonComponent', () => {
   let store: MockStore<{ loggedIn: boolean }>;
   const initialState = { loggedIn: false };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PokemonComponent],
       providers: [HubFacade, provideMockStore({ initialState })],
     }).compileComponents();
 
-    store = TestBed.get<Store>(Store);
+    store = TestBed.inject(MockStore);
     hubFacade = TestBed.inject(HubFacade);
   }));
 

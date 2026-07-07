@@ -5,7 +5,7 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { User } from 'src/app/interfaces/user.model';
+import { User } from '../../interfaces/user.model';
 import {
   getUserSuccess,
   loginFailure,

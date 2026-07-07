@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Pokemon } from 'src/app/interfaces/pokemon.model';
-import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
+import { Pokemon } from '../../interfaces/pokemon.model';
+import { PokemonService } from '../../services/pokemon/pokemon.service';
 import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
 
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.component.html',
-  styleUrls: ['./battle.component.css']
+  styleUrls: ['./battle.component.css'],
+  standalone: false
 })
 export class BattleComponent implements OnInit {
 

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { ResponseModel } from 'src/app/interfaces/response.model';
-import { Login, User } from 'src/app/interfaces/user.model';
+import { ResponseModel } from '../../interfaces/response.model';
+import { Login, User } from '../../interfaces/user.model';
 import { NewUser } from './../../interfaces/user.model';
 
 

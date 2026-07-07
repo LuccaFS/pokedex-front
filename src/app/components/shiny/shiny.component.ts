@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, ShinyHunt } from 'src/app/interfaces/pokemon.model';
+import { Pokemon, ShinyHunt } from '../../interfaces/pokemon.model';
 
-import { PokedexFacade } from 'src/app/state/pokedex/pokedex.facade';
+import { PokedexFacade } from '../../state/pokedex/pokedex.facade';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-shiny',
   templateUrl: './shiny.component.html',
   styleUrls: ['./shiny.component.css'],
+  standalone: false
 })
 export class ShinyComponent implements OnInit {
   shinyList$?: ShinyHunt[];
