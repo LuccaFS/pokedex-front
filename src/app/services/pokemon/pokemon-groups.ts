@@ -17,14 +17,6 @@ export const ultraBeastsId = [
   806,
 ];
 
-export const pastParadoxesId = [984, 985, 986, 987, 988, 989, 1007, 1009];
-
-export const futureParadoxesId = [
-  990, 991, 992, 993, 994, 995, 1005, 1006, 1008, 1010,
-];
-
-export const paradoxesId = [...pastParadoxesId, ...futureParadoxesId];
-
 export const subLegendariesId = [
   144, 145, 146, 243, 244, 245, 377, 378, 379, 380, 381, 480, 481, 482, 485,
   486, 488, 638, 639, 640, 641, 642, 645, 772, 773, 785, 786, 787, 788, 891,
@@ -47,3 +39,24 @@ export const allLegendariesId = [
   ...legendariesId,
   ...mythicalsId,
 ];
+
+export const fossilId = [138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,567,568,696,697,698,699,880,881,882,883];
+
+export const babyId = [172,173,174,175,236,238,239,240,298,360,406,433,438,439,440,446,447,458,848]
+
+export const pokemonGroupsList = [
+  ...startersId, 
+  ...allLegendariesId, 
+  ...fossilId, 
+  ...babyId, 
+  ...pseudosId
+]
+
+export const convergentId = [948,949,960, 961,1012,1013]
+
+export const pastParadoxesId = [984, 985, 986, 987, 988, 989, 1005, 1007, 1009, 1020, 1021];
+
+export const futureParadoxesId = [990, 991, 992, 993, 994, 995, 1006, 1008, 1010, 1022, 1023];
+
+export const paradoxesId = [...pastParadoxesId, ...futureParadoxesId];
+

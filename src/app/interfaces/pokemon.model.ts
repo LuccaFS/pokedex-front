@@ -1,13 +1,15 @@
-export interface Pokemon {
-  idPokemon: number;
-  dsName: string;
-  type1: string;
-  type2: string | null;
+export interface Pokemons {
+  pokemonNumber: number;
+  pokemonName: string;
+  type1: number;
+  type2: number | null;
   generation: number;
-  image: any;
-  isStarter: Boolean;
-  isPseudo: Boolean;
-  isLegendary: Boolean;
+  evolutionStage: number;
+  previousEvolutionNumber: number | null;
+  hasPokemonGroup: boolean ;
+  pokemonGroupId: number | null;
+  formGroupId: number | null;
+  baseFormNumber: number | null;
 }
 
 export interface ShinyHunt {
@@ -16,7 +18,7 @@ export interface ShinyHunt {
   counter: number;
 }
 
-export enum types {
+export enum PokemonTypes {
   Normal = 1,
   Ghost = 2,
   Grass = 3,
@@ -35,4 +37,27 @@ export enum types {
   Dark = 16,
   Steel = 17,
   Fairy = 18,
+}
+
+export enum PokemonGroup {
+  Starter = 1,
+  Fossil,
+  Pseudo,
+  Legendary,
+  Mythical,
+  Baby,
+  UltraBeast,
+}
+
+export enum FormGroup{
+  Special=1,
+  Megas,
+  Alolan,
+  Galarian,
+  Gmax,
+  Hisuian,
+  Paldean,
+  Convergent,
+  AncientParadox,
+  FutureParadox
 }

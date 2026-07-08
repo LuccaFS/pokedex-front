@@ -36,22 +36,22 @@
     <ng-container *ngFor="let Pokemon of PokemonList">
       <div class="box-border w-4/5 hover:scale-110">
         <div class="header">
-          <h2 class="number">#{{ Pokemon.idPokemon }}</h2>
+          <h2 class="number">#{{  Pokemon.baseFormNumber == null ? Pokemon.pokemonNumber : Pokemon.baseFormNumber }}</h2>
           <h2 class="gen">Gen:{{ Pokemon.generation }}</h2>
           <br />
-          <!-- <img class="inline p-10 justify-center"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{{Pokemon?.idPokemon}}.png"
-          [alt]="Pokemon.dsName" /><br /> -->
-          <img
+          <img class="inline p-10 justify-center"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{{Pokemon?.pokemonNumber}}.png"
+          [alt]="Pokemon.pokemonName" /><br /> 
+          <!-- <img
             class="inline p-10 justify-center"
             [src]="Pokemon.image"
             [alt]="Pokemon.dsName"
-          /><br />
+          /><br />-->
         </div>
-        - <b>{{ Pokemon.dsName }}</b> - <br />
+        - <b>{{ Pokemon.pokemonName }}</b> - <br />
         <div class="grid grid-cols-2 place-items-center">
-          <span class="Type {{ Pokemon.type1 }}">{{ Pokemon.type1 }}</span>
-          <span class="Type {{ Pokemon.type2 }}">{{ Pokemon.type2 }}</span>
+          <span class="Type {{ PokemonType[Pokemon.type1] }}">{{ PokemonType[Pokemon.type1] }}</span>
+          <span class="Type {{ Pokemon.type2 !== null ? PokemonType[Pokemon.type2] : '' }}">{{ Pokemon.type2 !== null ? PokemonType[Pokemon.type2] : '' }}</span>
           <br /><br />
         </div>
       </div>

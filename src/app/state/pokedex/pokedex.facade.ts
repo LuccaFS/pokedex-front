@@ -15,11 +15,17 @@ export class PokedexFacade {
 
   constructor(private store: Store) {}
 
-  getAllPokemon(user: User) {
-    this.store.dispatch(PokeActions.pokemonGetAll({ rank: user.dsRank }));
+  getAllPokemon(user: User | null) {
+    if(user)
+      this.store.dispatch(PokeActions.pokemonGetAll({ rank: user.dsRank }));
+    else
+      this.store.dispatch(PokeActions.pokemonGetAll({ rank: 'Master' }));
   }
 
-  getShinyHunts(user: User) {
-    this.store.dispatch(PokeActions.shinyGetHunts({ id: user.id }));
+  getShinyHunts(user: User | null) {
+    if(user)
+      this.store.dispatch(PokeActions.shinyGetHunts({ id: user.id }));
+    else
+      this.store.dispatch(PokeActions.shinyGetHunts({ id: 0 }));
   }
 }

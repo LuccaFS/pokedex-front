@@ -1,4 +1,8 @@
-import { Pokemon, ShinyHunt, types } from './../../interfaces/pokemon.model';
+import {
+  Pokemons,
+  PokemonTypes,
+  ShinyHunt,
+} from './../../interfaces/pokemon.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -9,29 +13,23 @@ import * as pokeGroups from './pokemon-groups';
 })
 export class PokemonService {
   public api = environment.baseUrl + 'Pokemon/';
-  private maxPokemon = 1017;
-  private maxPokemonForms = 1234;
+  private maxPokemon = 1025;
+  private maxPokemonForms = 1295;
 
   constructor(private http: HttpClient) {}
 
-  public getPokemons(): Promise<Pokemon[]> {
-    let pokedex: Pokemon[] = [];
+  public getPokemons(): Promise<Pokemons[]> {
     return new Promise((resolve) => {
       const headers = {
         'Content-Type': 'application/json',
       };
-      this.http.get(`${this.api}GetAll`).subscribe((pokemon: any) => {
-        pokemon.forEach((element: any) => {
-          element.type1 = types[element.type1]; //.trim();
-          element.type2 != null ? (element.type2 = types[element.type2]) : null; //.trim()
-          pokedex.push(element);
-        });
-        resolve(pokedex);
+      this.http.get(`${this.api}GetAll`).subscribe((pokemons: any) => {
+        resolve(pokemons);
       });
     });
   }
 
-  public getPokemonByName(name: string): Promise<Pokemon> {
+  public getPokemonByName(name: string): Promise<Pokemons> {
     return new Promise((resolve) => {
       this.http
         .get(`${this.api}GetByName?PokeName=${name}`)
@@ -43,7 +41,7 @@ export class PokemonService {
     });
   }
 
-  public getPokemonById(id: string): Promise<Pokemon> {
+  public getPokemonById(id: string): Promise<Pokemons> {
     return new Promise((resolve) => {
       this.http
         .get(`${this.api}GetById?PokeId=${id}`)
@@ -55,13 +53,17 @@ export class PokemonService {
     });
   }
 
-  public filterPokemons(pokedex: Pokemon[], rank: string): Pokemon[] {
+  public filterPokemons(pokedex: Pokemons[], rank: string): Pokemons[] {
     if (rank == 'Pokeball') {
-      pokedex = pokedex.filter((s) => s.isStarter);
+      pokedex = pokedex.filter((s) => s.pokemonGroupId == 1);
     } else if (rank == 'Greatball') {
-      pokedex = pokedex.filter((s) => !s.isPseudo && !s.isLegendary);
+      pokedex = pokedex.filter((s) => s.pokemonGroupId == null 
+      || s.pokemonGroupId == 1
+      || s.pokemonGroupId == 2
+      || s.pokemonGroupId == 6);
     } else if (rank == 'Ultraball') {
-      pokedex = pokedex.filter((s) => !s.isLegendary);
+      pokedex = pokedex.filter((s) => s.pokemonGroupId !== 4 &&
+       s.pokemonGroupId !== 5);
     }
     return pokedex;
   }
@@ -91,9 +93,11 @@ export class PokemonService {
     });
   }
 
+
   //Pokedex API
   public getPokemonsAPI(): Promise<any> {
-    let pokedex: Pokemon[] = [];
+    let pokedex: Pokemons[] = [];
+    console.log('teste');
     return new Promise((resolve) => {
       for (let i = 1; i <= this.maxPokemon; i++) {
         this.http
@@ -102,25 +106,34 @@ export class PokemonService {
             for (let p = 0; p < pokemonSpecies.varieties.length; p++) {
               const element = pokemonSpecies.varieties[p];
               this.http.get(element.pokemon.url).subscribe((pokemon: any) => {
-                let poke: Pokemon = {
-                  idPokemon: i,
-                  dsName: this.adjustPokemonName(element.pokemon.name),
-                  type1: this.adjustPokemonName(pokemon.types[0].type.name),
+                let groupId = pokeGroups.pokemonGroupsList.includes(pokemonSpecies.id);
+                let formId = this.findFormGroup(
+                  pokemonSpecies.id,
+                  element.pokemon.name,
+                  element.is_default,
+                );
+                let poke: Pokemons = {
+                  pokemonNumber: pokemon.id,
+                  pokemonName: this.adjustPokemonName(element.pokemon.name),
+                  type1: this.typeFormat(pokemon.types[0].type.name),
                   type2:
                     pokemon.types.length > 1
-                      ? this.adjustPokemonName(pokemon.types[1].type.name)
+                      ? this.typeFormat(pokemon.types[1].type.name)
                       : null,
                   generation: this.findGenaration(pokemonSpecies.id),
-                  image:
-                    pokemon.sprites.other['official-artwork'].front_default,
-                  isStarter: pokeGroups.startersId.includes(pokemon.id),
-                  isPseudo: pokeGroups.pseudosId.includes(pokemon.id),
-                  isLegendary: pokeGroups.allLegendariesId.includes(pokemon.id),
+                  evolutionStage:
+                    pokemonSpecies.evolves_from_species == null ? 1 : 2,
+                  previousEvolutionNumber: null,
+                  hasPokemonGroup: groupId,
+                  pokemonGroupId: groupId ? this.findGroup(i) : null,
+                  formGroupId: formId != 0 ? formId : null,
+                  baseFormNumber: formId != 0 ? i : null,
                 };
                 const valid = this.validForms(pokemonSpecies, p);
                 if (valid == p) this.sortPokedex(pokedex, poke);
                 if (pokedex.length >= this.maxPokemonForms - 1) {
                   resolve(pokedex);
+
                 }
               });
             }
@@ -161,15 +174,36 @@ export class PokemonService {
         return 7;
       case 809 < id && id <= 905:
         return 8;
-      case 905 < id && id <= 1021:
+      case 905 < id && id <= 1025:
         return 9;
       default:
         return 1;
     }
   }
 
+  private findGroup(id: number): number {
+    switch (true) {
+      case pokeGroups.fossilId.includes(id):
+        return 2;
+      case pokeGroups.pseudosId.includes(id):
+        return 3;
+      case pokeGroups.legendariesId.includes(id):
+        return 4;
+      case pokeGroups.subLegendariesId.includes(id):
+        return 4;
+      case pokeGroups.mythicalsId.includes(id):
+        return 5;
+      case pokeGroups.babyId.includes(id):
+        return 6;
+      case pokeGroups.ultraBeastsId.includes(id):
+        return 7;
+      default:
+        return 1;
+    }
+  }
+
   private validForms(pokemon: any, index: number): number {
-    const singleFormDisplay = [710, 711, 774, 778, 1007, 1008];
+    const singleFormDisplay = [710, 711, 744, 774, 778, 1007, 1008];
     switch (true) {
       case index == 0:
         return index;
@@ -194,8 +228,12 @@ export class PokemonService {
       'tapu-lele',
       'tapu-bulu',
       'tapu-fini',
+      'wo-chien',
+      'chien-pao',
+      'ting-lu',
+      'chi-yu'
     ];
-    const singleNameDisplay = ['Pumpkaboo', 'Gourgeist', 'Minior'];
+    const singleNameDisplay = ['Pumpkaboo', 'Gourgeist', 'Minior', 'Rockruff'];
 
     if (!hiffenNameDisplay.includes(text))
       text = text.replace('-', ' ').replace('-', ' ').replace('-', ' ');
@@ -212,16 +250,80 @@ export class PokemonService {
     return text;
   }
 
-  private sortPokedex(arr: Pokemon[], val: Pokemon) {
+  private sortPokedex(arr: Pokemons[], val: Pokemons) {
     arr.push(val);
-    let i = arr.length - 1;
-    let item = arr[i];
-    while (i > 0 && item.idPokemon < arr[i - 1].idPokemon) {
-      arr[i] = arr[i - 1];
-      i -= 1;
+    const byParent = new Map<number | null, Pokemons[]>();
+
+    // Group children by parentId
+    for (const i of arr) {
+      const group = byParent.get(i.baseFormNumber) ?? [];
+      group.push(i);
+      byParent.set(i.baseFormNumber, group);
     }
-    arr[i] = item;
-    console.log(arr.length);
-    return arr;
+
+    // Sort each group by id
+    for (const group of byParent.values()) {
+      group.sort((a, b) => a.pokemonNumber - b.pokemonNumber);
+    }
+
+    const result: Pokemons[] = [];
+
+    function visit(parentId: number | null) {
+      for (const item of byParent.get(parentId) ?? []) {
+        result.push(item);
+        visit(item.pokemonNumber);
+      }
+    }
+
+    visit(null);
+
+    return result;
+  }
+
+  private typeFormat(type: string) {
+    type = type.charAt(0).toUpperCase() + type.slice(1);
+    return PokemonTypes[type as keyof typeof PokemonTypes];
+  }
+
+  private findFormGroup(id: number, name: string, isDefault: boolean): number {
+    switch (true) {
+      case isDefault:
+        return 0;
+      case pokeGroups.futureParadoxesId.includes(id):
+        return 10;
+      case pokeGroups.pastParadoxesId.includes(id):
+        return 9;
+      case pokeGroups.convergentId.includes(id):
+        return 8;
+      case name.includes('-paldea'):
+        return 7;
+      case name.includes('-hisui'):
+        return 6;
+      case name.includes('-gmax'):
+        return 5;
+      case name.includes('-galar'):
+        return 4;
+      case name.includes('-alola'):
+        return 3;
+      case name.includes('-mega'):
+        return 2;
+      case name.includes('-mega'):
+        return 2;
+      default:
+        return 1;
+    }
+  }
+
+  public savePokemonApi(pokemons: Pokemons[]): Promise<any> {
+    return new Promise((resolve) => {
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      this.http
+        .post(`${this.api}SaveFromApi`, pokemons, { headers })
+        .subscribe((response: any) => {
+          resolve(response);
+        });
+    });
   }
 }
