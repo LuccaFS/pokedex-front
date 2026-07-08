@@ -134,4 +134,12 @@ export class PokemonComponent implements OnInit {
     console.log(this.PokemonList.length);
     if (this.PokemonList.length < 1) this.PokemonList = this.Pokemons;
   }
+
+  public getImage(Pokemon: Pokemons): string {
+      if (Pokemon?.baseFormNumber == null && Pokemon.pokemonNumber >= 1026) {
+          return `https://windswaves.pokemon.com/_images/feb_27_2026/${Pokemon?.pokemonName?.toLowerCase()}.png`;
+      } else {
+          return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${Pokemon?.pokemonNumber}.png`;
+      }
+  }
 }
