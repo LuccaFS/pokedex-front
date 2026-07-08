@@ -1,6 +1,6 @@
 import { ShinyHunt } from './../../interfaces/pokemon.model';
 import { createAction, props } from '@ngrx/store';
-import { Pokemon } from '../../interfaces/pokemon.model';
+import { Pokemons } from '../../interfaces/pokemon.model';
 
 
 export const pokemonGetAll = createAction(
@@ -10,7 +10,7 @@ export const pokemonGetAll = createAction(
 
 export const pokemonGetAllSuccess = createAction(
   '[Pokemon[]] Success to Get all Pokémon',
-  props<{ pokemons: Pokemon[] }>()
+  props<{ pokemons: Pokemons[] }>()
 )
 
 

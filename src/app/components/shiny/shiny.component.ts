@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, ShinyHunt } from '../../interfaces/pokemon.model';
+import { Pokemons, ShinyHunt } from '../../interfaces/pokemon.model';
 
 import { PokedexFacade } from '../../state/pokedex/pokedex.facade';
 import { firstValueFrom } from 'rxjs';
@@ -13,9 +13,9 @@ import { firstValueFrom } from 'rxjs';
 export class ShinyComponent implements OnInit {
   shinyList$?: ShinyHunt[];
 
-  public PokemonList: Pokemon[] = [];
+  public PokemonList: Pokemons[] = [];
   public selectedName: string = 'Bulbasaur';
-  public Pokemon: Pokemon | undefined;
+  public Pokemon: Pokemons | undefined;
 
   public counter: number = 0;
   public userName: string = '';
@@ -26,8 +26,8 @@ export class ShinyComponent implements OnInit {
     this.shinyList$ = await firstValueFrom(this.pokeFacade.shiny$);
     this.PokemonList = await firstValueFrom(this.pokeFacade.pokedex$);
     if (this.shinyList$) {
-      this.selectedName = this.shinyList$[0].pokeName;
-      this.counter = this.shinyList$[0].counter;
+      this.selectedName = this.shinyList$[0].pokemonName;
+      this.counter = this.shinyList$[0].encounterCount;
     }
 
     this.selected(this.selectedName);
@@ -35,7 +35,7 @@ export class ShinyComponent implements OnInit {
 
   public selected(event: any) {
     this.selectedName = event;
-    this.Pokemon = this.PokemonList.find((pokemon) => pokemon.dsName == event);
+    this.Pokemon = this.PokemonList.find((pokemon) => pokemon.pokemonName == event);
   }
 
   public encounter() {

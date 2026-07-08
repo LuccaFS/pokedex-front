@@ -1,3 +1,15 @@
+export interface Pokemon {
+  idPokemon: number;
+  dsName: string;
+  type1: string;
+  type2: string | null;
+  generation: number;
+  image: any;
+  isStarter: Boolean;
+  isPseudo: Boolean;
+  isLegendary: Boolean;
+}
+
 export interface Pokemons {
   pokemonNumber: number;
   pokemonName: string;
@@ -13,9 +25,15 @@ export interface Pokemons {
 }
 
 export interface ShinyHunt {
-  idTrainer: number;
-  pokeName: string;
-  counter: number;
+  trainerId: number;
+  pokemonNumber: number;
+  pokemonName: string;
+  encounterCount: number;
+  phaseCount: number;
+  gameId: number;
+  hasShinyCharm: boolean;
+  methodId: number;
+  huntComplete: boolean;
 }
 
 export enum PokemonTypes {

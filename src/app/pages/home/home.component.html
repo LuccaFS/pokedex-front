@@ -69,7 +69,7 @@
     </div>
   </aside>
   <main class="main flex flex-col w-screen md:ml-0 transition-all duration-150 ease-in">
-    <div class="main-content flex flex-col p-10" *ngIf="(loaded$ | async) && (loadedPokedex$ | async) && (loadedShiny$ | async); else loading">
+    <div class="main-content flex flex-col p-10" *ngIf="(loadedPokedex$ | async); else loading">
       <div class="flex flex-col w-full overflow-y-auto border-4 border-gray-400 border-dashed bg-white rounded mt-4" style="height: 85vh;">
         <router-outlet></router-outlet>
       </div>
@@ -81,7 +81,7 @@
 
     <footer class="footer px-4 py-4">
       <div class="footer-content">
-        <p class="text-sm text-gray-600 text-center">© Pokemon 1996 - 2023. All rights reserved.</p>
+        <p class="text-sm text-gray-600 text-center">© Pokemon 1996 - 2026. All rights reserved.</p>
       </div>
     </footer>
   </main>

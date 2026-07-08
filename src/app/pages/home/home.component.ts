@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Pokemon } from '../../interfaces/pokemon.model';
-import * as AuthActions from '../../state/auth/auth.actions';
-import * as fromAuth from '../../state/auth/auth.reducer';
-import * as PokeActions from '../../state/pokedex/pokedex.actions';
-import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
 import { HubFacade } from '../../state/hub.facade';
 import { User } from '../../interfaces/user.model';
-import { firstValueFrom } from 'rxjs';
 import { PokedexFacade } from '../../state/pokedex/pokedex.facade';
 import { AuthFacade } from '../../state/auth/auth.facade';
 
@@ -46,11 +39,11 @@ export class HomeComponent implements OnInit {
       this.user$.subscribe((user) => {
         if (user) {
           this.user = user;
-          this.pokeFacade.getAllPokemon(this.user);
-          this.pokeFacade.getShinyHunts(this.user);
+          //this.pokeFacade.getShinyHunts(this.user);
         }
       });
     }
+    this.pokeFacade.getAllPokemon(this.user);
     //get auth user name and role from state
     // this._store.select(fromAuth.selectName).subscribe((user:any) => this.userName = user);
     // this._store.select(fromAuth.selectUser).subscribe((user:any) => {

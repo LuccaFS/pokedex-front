@@ -58,7 +58,7 @@ export class AuthService {
           resolve(response);
         },
         (err: HttpErrorResponse) => {
-          this.route.navigate(['/login']);
+          //this.route.navigate(['/login']);
           reject(err.error);
         }
 
