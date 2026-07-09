@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ShinyComponent } from './shiny.component';
-import { HubFacade } from 'src/app/state/hub.facade';
-import { PokedexFacade } from 'src/app/state/pokedex/pokedex.facade';
+import { HubFacade } from '../../state/hub.facade';
+import { PokedexFacade } from '../../state/pokedex/pokedex.facade';
 
 describe('ShinyComponent', () => {
   let component: ShinyComponent;
@@ -14,7 +14,7 @@ describe('ShinyComponent', () => {
   let store: MockStore<{ loggedIn: boolean }>;
   const initialState = { loggedIn: false };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ShinyComponent],
       providers: [HubFacade, PokedexFacade, provideMockStore({ initialState })],

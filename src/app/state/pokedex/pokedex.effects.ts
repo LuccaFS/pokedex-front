@@ -18,7 +18,7 @@ export class PokedexEffects {
     return this.actions.pipe(
       ofType(PokeActions.pokemonGetAll),
       exhaustMap((action) => {
-        return from(this.pokemonService.getPokemonsAPI()).pipe(
+        return from(this.pokemonService.getPokemons()).pipe(
           map((pokedexFull: any) => {
             console.log(pokedexFull.length);
             return PokeActions.pokemonGetAllSuccess({

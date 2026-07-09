@@ -2,13 +2,14 @@ import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './state/auth/auth.reducer';
 import { AuthEffects } from './state/auth/auth.effects';
 import { AuthFacade } from './state/auth/auth.facade';
 import { EffectsModule } from '@ngrx/effects';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi,  } from '@angular/common/http';
 import { JwtInterceptor } from './helper/jwtInterceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -18,11 +19,11 @@ import { PokedexFacade } from './state/pokedex/pokedex.facade';
 import { HubFacade } from './state/hub.facade';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations:[AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(
@@ -44,9 +45,10 @@ import { HubFacade } from './state/hub.facade';
     HubFacade,
     AuthFacade,
     PokedexFacade,
+    provideHttpClient(withInterceptorsFromDi(),),
   ],
-  bootstrap: [AppComponent],
-  exports: [AppRoutingModule],
+  exports: [AppRoutingModule, RouterModule],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor() {}

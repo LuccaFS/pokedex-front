@@ -6,7 +6,7 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { Pokemon } from 'src/app/interfaces/pokemon.model';
+import { Pokemons } from '../../interfaces/pokemon.model';
 import {
   logOut,
   pokemonGetAllSuccess,
@@ -14,7 +14,7 @@ import {
 } from './pokedex.actions';
 
 export interface State {
-  pokemonList: Pokemon[];
+  pokemonList: Pokemons[];
   loadedPokemon: boolean;
   shinyHunts: ShinyHunt[];
   loadedShiny: boolean;

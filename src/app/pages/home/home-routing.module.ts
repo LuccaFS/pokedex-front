@@ -1,6 +1,6 @@
 import { ShinyComponent } from './../../components/shiny/shiny.component';
 import { BattleComponent } from './../../components/battle/battle.component';
-import { PokemonComponent } from 'src/app/components/pokemon/pokemon.component';
+import { PokemonComponent } from '../../components/pokemon/pokemon.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
