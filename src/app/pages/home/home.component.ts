@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HubFacade } from '../../state/hub.facade';
 import { User } from '../../interfaces/user.model';
 import { PokedexFacade } from '../../state/pokedex/pokedex.facade';
 import { AuthFacade } from '../../state/auth/auth.facade';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -26,9 +27,16 @@ export class HomeComponent implements OnInit {
     private authFacade: AuthFacade,
     private pokeFacade: PokedexFacade,
     private hubFacade: HubFacade,
+    private elementRef: ElementRef,
     private route: ActivatedRoute,
     private router: Router //private _sanitazer: DomSanitazer
-  ) {}
+  ) {
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd)  
+    ).subscribe((event: NavigationEnd) => {
+      this.setStyle(event.url.split('/')[2]);
+    });
+  }
 
   async ngOnInit() {
     //get token from state
@@ -39,7 +47,7 @@ export class HomeComponent implements OnInit {
       this.user$.subscribe((user) => {
         if (user) {
           this.user = user;
-          //this.pokeFacade.getShinyHunts(this.user);
+          this.pokeFacade.getShinyHunts(this.user);
         }
       });
     }
@@ -68,5 +76,10 @@ export class HomeComponent implements OnInit {
   public signOut() {
     this.user = null;
     this.hubFacade.logOut();
+  }
+
+  setStyle(style:string) {
+    const ne = this.elementRef.nativeElement;
+    ne.style.setProperty('--sidebar-color', `var(--sidebar-color-${style})`);
   }
 }

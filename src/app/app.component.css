@@ -1,0 +1,7 @@
+:host {
+  --sidebar-color-pokedex: #EF4444;
+  --sidebar-color-shiny: #E2CE3B;
+  --sidebar-color-trainer: #86D6A6;
+  --sidebar-color-default: #bdb6b6;
+  --sidebar-color:var(--sidebar-color-default);
+}

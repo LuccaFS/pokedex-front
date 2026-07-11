@@ -12,9 +12,13 @@ footer{
   bottom: 0;
 }
 
+.sidebar-menu{
+  background-color: var(--sidebar-color);
+}
+
 .loader {
   border: 16px solid #f3f3f3;
-  border-top: 16px solid #dd2626;
+  border-top: 16px solid var(--sidebar-color);
   border-radius: 50%;
   width: 120px;
   height: 120px;
