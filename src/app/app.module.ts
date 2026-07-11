@@ -17,6 +17,7 @@ import { pokedexReducer } from './state/pokedex/pokedex.reducer';
 import { PokedexEffects } from './state/pokedex/pokedex.effects';
 import { PokedexFacade } from './state/pokedex/pokedex.facade';
 import { HubFacade } from './state/hub.facade';
+import { CommonService } from './services/common/common-service';
 
 @NgModule({
   declarations:[AppComponent],
@@ -41,11 +42,12 @@ import { HubFacade } from './state/hub.facade';
     EffectsModule.forRoot([AuthEffects, PokedexEffects]),
   ],
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     HubFacade,
     AuthFacade,
     PokedexFacade,
-    provideHttpClient(withInterceptorsFromDi(),),
+    CommonService
   ],
   exports: [AppRoutingModule, RouterModule],
   bootstrap: [AppComponent]

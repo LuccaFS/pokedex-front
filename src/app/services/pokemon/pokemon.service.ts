@@ -12,7 +12,7 @@ import * as pokeGroups from './pokemon-groups';
   providedIn: 'root',
 })
 export class PokemonService {
-  public api = environment.baseUrl + 'Pokemon/';
+  public api = environment.baseUrl + 'Pokemon';
   private maxPokemon = 1025;
   private maxPokemonForms = 1295;
 
@@ -23,7 +23,7 @@ export class PokemonService {
       const headers = {
         'Content-Type': 'application/json',
       };
-      this.http.get(`${this.api}GetAll`).subscribe((pokemons: any) => {
+      this.http.get(`${this.api}/GetAll`).subscribe((pokemons: any) => {
         resolve(pokemons);
       });
     });
@@ -32,7 +32,7 @@ export class PokemonService {
   public getPokemonByName(name: string): Promise<Pokemons> {
     return new Promise((resolve) => {
       this.http
-        .get(`${this.api}GetByName?PokeName=${name}`)
+        .get(`${this.api}/GetByName?PokeName=${name}`)
         .subscribe((pokemon: any) => {
           pokemon.type1 = pokemon.type1.trim();
           pokemon.type2 != null ? (pokemon.type2 = pokemon.type2.trim()) : null;
@@ -44,7 +44,7 @@ export class PokemonService {
   public getPokemonById(id: string): Promise<Pokemons> {
     return new Promise((resolve) => {
       this.http
-        .get(`${this.api}GetById?PokeId=${id}`)
+        .get(`${this.api}/GetById?PokeId=${id}`)
         .subscribe((pokemon: any) => {
           pokemon.type1 = pokemon.type1.trim();
           pokemon.type2 != null ? (pokemon.type2 = pokemon.type2.trim()) : null;
@@ -74,7 +74,7 @@ export class PokemonService {
         'Content-Type': 'application/json',
       };
       this.http
-        .post(`${this.api}Shiny/Save`, hunt, { headers })
+        .post(`${this.api}/Shiny/Save`, hunt, { headers })
         .subscribe((response: any) => {
           resolve(response);
         });
@@ -85,7 +85,7 @@ export class PokemonService {
     let huntList = [];
     return new Promise((resolve) => {
       this.http
-        .get(`${this.api}Shiny/GetTrainerHunts?idTrainer=${idTrainer}`)
+        .get(`${this.api}/Shiny/GetTrainerHunts?idTrainer=${idTrainer}`)
         .subscribe((shinies: any) => {
           huntList = shinies;
           resolve(huntList);
