@@ -9,6 +9,8 @@ import { PokemonComponent } from '../../components/pokemon/pokemon.component';
 import { ShinyComponent } from './../../components/shiny/shiny.component';
 import { BattleComponent } from './../../components/battle/battle.component';
 
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -20,6 +22,8 @@ import { BattleComponent } from './../../components/battle/battle.component';
     CommonModule,
     HomeRoutingModule,
     FormsModule,
+    MatIconModule
+
   ],
   providers: [provideHttpClient()],
   exports: [HomeComponent]

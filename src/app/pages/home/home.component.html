@@ -70,7 +70,7 @@
   </aside>
   <main class="main flex flex-col w-screen md:ml-0 transition-all duration-150 ease-in">
     <div class="main-content flex flex-col p-10" *ngIf="(loadedPokedex$ | async); else loading">
-      <div class="flex flex-col w-full overflow-y-auto border-4 border-gray-400 border-dashed bg-white rounded mt-4" style="height: 85vh;">
+      <div class="flex flex-col w-full overflow-y-auto border-4 border-gray-400 border-dashed bg-white rounded mt-4" style="height: 85vh; ; width: 110vh">
         <router-outlet></router-outlet>
       </div>
     </div>

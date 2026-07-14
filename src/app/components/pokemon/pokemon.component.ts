@@ -4,7 +4,7 @@ import { Pokemons } from '../../interfaces/pokemon.model';
 import { Store } from '@ngrx/store';
 import * as fromPokedex from '../../state/pokedex/pokedex.reducer';
 
-import { PokemonTypes } from '../../interfaces/pokemon.model';
+import { PokemonTypes } from '../../interfaces/enum.model';
 
 @Component({
   selector: 'app-pokemon',

@@ -1,8 +1,8 @@
 import {
   Pokemons,
-  PokemonTypes,
   ShinyHunt,
 } from './../../interfaces/pokemon.model';
+import { PokemonTypes } from '../../interfaces/enum.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';

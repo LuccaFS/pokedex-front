@@ -1,0 +1,58 @@
+.description {
+  font-style: italic;
+  color: var(--sidebar-color-default);
+}
+
+.dropdown{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    span{
+        width: 30%;
+    }
+
+    select{
+        width: 70%;
+    }
+}
+
+
+input:where([type='checkbox']):checked {
+    background-color: var(--sidebar-color);
+    --tw-ring-color: var(--sidebar-color);
+}
+
+
+input:where([type='checkbox']):focus {
+    --tw-ring-color: var(--sidebar-color);
+}
+
+.countInput{
+    text-align: end;
+    border: none;
+}
+
+.button1{
+    border-color: var(--sidebar-color);
+    color: var(--sidebar-color);
+    font-weight: 300;
+    width: 50%;
+    margin: 20px;
+    border-width: 2px;
+    border-radius: 15px;
+    font-size: large;
+}
+
+
+.button2{
+    background-color: var(--sidebar-color);
+    border-color: var(--sidebar-color);
+    color: white;
+    font-weight: 500;
+    width: 50%;
+    margin: 20px;
+    border-width: 2px;
+    border-radius: 15px;
+    font-size: large;
+}
