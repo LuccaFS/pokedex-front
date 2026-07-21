@@ -1,5 +1,5 @@
-<header class="sticky top-0 z-50 px-10 py-5 bg-white">
-  <div class="relative">
+<header class="sticky top-0 z-50 px-10 py-5 bg-white flex">
+  <div class="relative w-full">
     <div
       class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
     >
@@ -20,7 +20,7 @@
       </svg>
     </div>
     <input
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="Search"
       type="text"
       name="search"
@@ -29,6 +29,101 @@
       (ngModelChange)="filterSearch($event)"
     />
   </div>
+
+  <button class="filter-button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>filter_list</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" class="custom-menu">
+      <mat-form-field (click)="$event.stopPropagation()">
+        <mat-label>Types</mat-label>
+        <mat-select [formControl]="TypeControl" multiple>
+          <mat-select-trigger>
+            <mat-chip-listbox>
+              <mat-chip-option
+                *ngFor="let type of TypeControl.value"
+                [removable]="true"
+                (removed)="onRemoved(type, 'type')"
+              >
+                {{ type.name }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-option>
+            </mat-chip-listbox>
+          </mat-select-trigger>
+
+          <mat-option *ngFor="let type of TypeList" [value]="type">{{
+            type.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field (click)="$event.stopPropagation()">
+        <mat-label>Forms</mat-label>
+        <mat-select [formControl]="FormControl" multiple>
+          <mat-select-trigger>
+            <mat-chip-listbox>
+              <mat-chip-option
+                *ngFor="let form of FormControl.value"
+                [removable]="true"
+                (removed)="onRemoved(form, 'form')"
+              >
+                {{ form.name }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-option>
+            </mat-chip-listbox>
+          </mat-select-trigger>
+
+          <mat-option *ngFor="let form of FormList" [value]="form">{{
+            form.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field (click)="$event.stopPropagation()">
+        <mat-label>Groups</mat-label>
+        <mat-select [formControl]="GroupControl" multiple>
+          <mat-select-trigger>
+            <mat-chip-listbox>
+              <mat-chip-option
+                *ngFor="let group of GroupControl.value"
+                [removable]="true"
+                (removed)="onRemoved(group, 'group')"
+              >
+                {{ group.name }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-option>
+            </mat-chip-listbox>
+          </mat-select-trigger>
+
+          <mat-option *ngFor="let group of GroupList" [value]="group">{{
+            group.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field (click)="$event.stopPropagation()">
+        <mat-label>Generation</mat-label>
+        <mat-select [formControl]="GenerationControl" multiple>
+          <mat-select-trigger>
+            <mat-chip-listbox>
+              <mat-chip-option
+                *ngFor="let gen of GenerationControl.value"
+                [removable]="true"
+                (removed)="onRemoved(gen, 'gen')"
+              >
+                {{ gen.name }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-option>
+            </mat-chip-listbox>
+          </mat-select-trigger>
+
+          <mat-option *ngFor="let gen of GenerationList" [value]="gen">{{
+            gen.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button class="button-menu" (click)="applyFilters()">Ok</button>
+  </mat-menu>
 </header>
 
 <div class="p-10 md:overflow-y-auto">
@@ -36,12 +131,20 @@
     <ng-container *ngFor="let Pokemon of PokemonList">
       <div class="box-border w-4/5 hover:scale-110">
         <div class="header">
-          <h2 class="number">#{{  Pokemon.baseFormNumber == null ? Pokemon.pokemonNumber : Pokemon.baseFormNumber }}</h2>
+          <h2 class="number">
+            #{{
+              Pokemon.baseFormNumber == null
+                ? Pokemon.pokemonNumber
+                : Pokemon.baseFormNumber
+            }}
+          </h2>
           <h2 class="gen">Gen:{{ Pokemon.generation }}</h2>
           <br />
-          <img class="inline p-10 justify-center"
-          [src]="getImage(Pokemon)"
-          [alt]="Pokemon.pokemonName" /><br /> 
+          <img
+            class="inline p-10 justify-center"
+            [src]="getImage(Pokemon)"
+            [alt]="Pokemon.pokemonName"
+          /><br />
           <!-- <img
             class="inline p-10 justify-center"
             [src]="Pokemon.image"
@@ -50,8 +153,17 @@
         </div>
         - <b>{{ Pokemon.pokemonName }}</b> - <br />
         <div class="grid grid-cols-2 place-items-center">
-          <span class="Type {{ PokemonType[Pokemon.type1] }}">{{ PokemonType[Pokemon.type1] }}</span>
-          <span class="Type {{ Pokemon.type2 !== null ? PokemonType[Pokemon.type2] : '' }}">{{ Pokemon.type2 !== null ? PokemonType[Pokemon.type2] : '' }}</span>
+          <span class="Type {{ PokemonType[Pokemon.type1] }}">{{
+            PokemonType[Pokemon.type1]
+          }}</span>
+          <span
+            class="Type {{
+              Pokemon.type2 !== null ? PokemonType[Pokemon.type2] : ''
+            }}"
+            >{{
+              Pokemon.type2 !== null ? PokemonType[Pokemon.type2] : ""
+            }}</span
+          >
           <br /><br />
         </div>
       </div>

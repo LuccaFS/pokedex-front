@@ -2,6 +2,14 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+:root {
+  --color-pokedex: #EF4444;
+  --color-shiny: #E2CE3B;
+  --color-trainer: #86D6A6;
+  --color-default: #bdb6b6;
+  --sidebar-color:var(--color-default);
+}
+
 
 .auth-button{
   width: 300px;
@@ -116,4 +124,22 @@
 
 .Flying{
   background-color: rgb(143, 192, 229);
+}
+
+
+.custom-menu {
+  width: 400px !important;
+  max-width: 400px !important;
+}
+
+.custom-menu .mat-mdc-menu-content {
+  width: 100%;
+}
+
+.custom-menu .mat-mdc-form-field {
+  width: 100%;
+}
+
+.custom-menu .mat-mdc-text-field-wrapper {
+  width: 100%;
 }

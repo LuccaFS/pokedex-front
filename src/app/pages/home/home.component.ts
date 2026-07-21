@@ -80,6 +80,6 @@ export class HomeComponent implements OnInit {
 
   setStyle(style:string) {
     const ne = this.elementRef.nativeElement;
-    ne.style.setProperty('--sidebar-color', `var(--sidebar-color-${style})`);
+    ne.style.setProperty('--sidebar-color', `var(--color-${style})`);
   }
 }
