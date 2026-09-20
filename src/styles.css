@@ -10,6 +10,16 @@
   --sidebar-color:var(--color-default);
 }
 
+div.mat-mdc-select-panel {
+  margin-top: 4px !important;
+  padding: 0 !important;
+  width: 95% !important;
+
+  .mdc-list-item__primary-text {
+    min-width: 100% !important;
+  }
+}
+
 
 .auth-button{
   width: 300px;

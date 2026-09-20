@@ -27,6 +27,32 @@ input:where([type='checkbox']):checked {
 input:where([type='checkbox']):focus {
     --tw-ring-color: var(--sidebar-color);
 }
+.pokemon-panel {
+  padding: 0 !important;
+  width: 95% !important;
+
+  .pokemon-search-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px;
+  }
+
+  input {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}
+
+.pokemon-search-option {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background: white !important;
+  height: auto !important;
+  min-height: auto !important;
+  padding: 8px 16px !important;
+  box-sizing: border-box !important;
+}
 
 .countInput{
     text-align: end;
@@ -55,4 +81,10 @@ input:where([type='checkbox']):focus {
     border-width: 2px;
     border-radius: 15px;
     font-size: large;
+}
+
+.encounterButton{
+    font-size: 2.5rem !important;
+    height: 2.5rem !important;
+    width: 2.5rem !important;
 }
